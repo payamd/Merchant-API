@@ -24,6 +24,7 @@ builder.Services.AddSwaggerGen();
 // add our services for direct injection
 
 builder.Services.AddSingleton<TodoService>();
+builder.Services.AddSingleton<ShopItemService>();
 
 var app = builder.Build();
 
