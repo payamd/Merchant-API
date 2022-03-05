@@ -14,6 +14,7 @@ public class ShopUserService{
 ///Default Values
     private List<ShopUser> ShopUsers = new List<ShopUser> () {
         new ShopUser("1", "username1", "Profile Picture1","Phone Number1","Email1","Address1","Zipcode", "Password","Buyer", false)
+        new ShopUser("2", "username2", "Profile Picture2","Phone Number2","Email2","Address2","Zipcode", "Password","Seller", false)
     };
 
 /// Create Method
