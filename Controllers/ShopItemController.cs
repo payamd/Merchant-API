@@ -5,7 +5,7 @@ using Merchant_API.models;
 
 [ApiController]
 /*[Route("api/[controller]")]*/
-//[Route("/")]
+[Route("/")]
 [Route("[controller]")]
 public class ShopItemController : ControllerBase {
     private readonly ShopItemService _ShopItemService;
@@ -53,7 +53,7 @@ public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
         // object not found is the only reaon for this return we can change it in future :>
         return NotFound();
     }
-    return NoContent();
+    return Ok("Status: Ok");
 }
 
 
@@ -65,7 +65,7 @@ public async Task<ActionResult> Delete (int Id){
     }
     await _ShopItemService.DeleteAsync(ShopItem.Id);
 
-    return NoContent();
+    return Ok("Status: Ok");
 }
 
 

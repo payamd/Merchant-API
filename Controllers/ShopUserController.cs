@@ -53,7 +53,7 @@ public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
         // object not found is the only reaon for this return we can change it in future :>
         return NotFound();
     }
-    return NoContent();
+    return Ok("Status: Ok");
 }
 
 
@@ -65,7 +65,7 @@ public async Task<ActionResult> Delete (string Id){
     }
     await _ShopUserService.DeleteAsync(ShopUser.Id);
 
-    return NoContent();
+    return Ok("Status: Ok");
 }
 
 //add item
@@ -80,7 +80,7 @@ public async Task<ActionResult> AddItem(string Id, int itemId){
         // this is a good place to add some new code
         return NotFound();
     }
-    return Ok();
+    return Ok("Status: Ok");
 }
 
 

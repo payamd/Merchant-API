@@ -5,8 +5,8 @@ using Merchant_API.models;
 
 [ApiController]
 /*[Route("api/[controller]")]*/
-[Route("/")]
-//[Route("[controller]")]
+//[Route("/")]
+[Route("[controller]")]
 public class TodoController : ControllerBase {
     private readonly TodoService _todoService;
     public TodoController(TodoService todoService)
