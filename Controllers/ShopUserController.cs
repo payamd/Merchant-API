@@ -69,7 +69,7 @@ public async Task<ActionResult> Delete (string Id){
 }
 
 //add item
-[HttpPut("Add{id}")]
+[HttpPost("Add{id}")]
 public async Task<ActionResult> AddItem(string Id, int itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
