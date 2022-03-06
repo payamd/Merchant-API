@@ -1,7 +1,7 @@
 namespace Merchant_API.models;
 
 public class ShopItem{
-    public string Id { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public string ShortDescription { get; set; }
     public string Description { get; set; }
@@ -12,7 +12,7 @@ public class ShopItem{
 
     public string Quantity { get; set; }
 
-    public ShopItem (string Id, string Name, string ShortDescription,
+    public ShopItem (int Id, string Name, string ShortDescription,
     string Description, string Picture,string Price, string Option, string Category, string Quantity)
     {
         this.Id = Id;

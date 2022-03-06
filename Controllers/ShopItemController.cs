@@ -24,7 +24,7 @@ public async Task<List<ShopItem>> Get(){
 
 
 [HttpGet("{id}")]
-public async Task<ActionResult<ShopItem>> Get(string Id){
+public async Task<ActionResult<ShopItem>> Get(int Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     if (ShopItem is null) {
         return NotFound();
@@ -41,7 +41,7 @@ public async Task<ActionResult> Post(ShopItem newShopItem){
 }
 
 [HttpPut("{id}")]
-public async Task<ActionResult> Update(string Id, ShopItem updatedShopItem){
+public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     if (ShopItem is null) {
         return NotFound();
@@ -58,7 +58,7 @@ public async Task<ActionResult> Update(string Id, ShopItem updatedShopItem){
 
 
 [HttpDelete("{id}")]
-public async Task<ActionResult> Delete (string Id){
+public async Task<ActionResult> Delete (int Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     if (ShopItem is null) {
         return NotFound();

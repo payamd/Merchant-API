@@ -9,14 +9,14 @@ public class ShopUser{
     public string Address { get; set; }
     public string Zipcode { get; set; }
     public string Password { get; set; }
-    public string ShopUserRole { get; set; }
-    public bool Authorize { get; set; }
+    public bool IsBuyer { get; set; }
+    public bool IsLoggedIn { get; set; }
     public List<int> ShoppingBag { get; set; }
 
     //public List<ShopItem> ShoppingBag { get; set; }
 
     public ShopUser (string Id, string Name,string ProfilePicture, string PhoneNumber,
-    string Email, string Address,string Zipcode, string Password,string ShopUserRole, bool Authorize)
+    string Email, string Address,string Zipcode, string Password,bool IsBuyer, bool IsLoggedIn)
     {
         this.Id = Id;
         this.Name = Name;
@@ -26,8 +26,8 @@ public class ShopUser{
         this.Address = Address;
         this.Zipcode = Zipcode;
         this.Password = Password;
-        this.ShopUserRole= ShopUserRole;
-        this.Authorize = Authorize;
+        this.IsBuyer= IsBuyer;
+        this.IsLoggedIn = IsLoggedIn;
         this.ShoppingBag = new List<int>();
         //this.ShoppingBag = new List<ShopItem>();
         //this.ShoppingBag.add(ShoppingBag);
