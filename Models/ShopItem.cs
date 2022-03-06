@@ -8,10 +8,12 @@ public class ShopItem{
     public string Picture { get; set; }
     public string Price { get; set; }
     public string Option { get; set; }
+    public string Category { get; set; }
+
     public string Quantity { get; set; }
 
     public ShopItem (string Id, string Name, string ShortDescription,
-    string Description, string Picture,string Price, string Option, string Quantity)
+    string Description, string Picture,string Price, string Option, string Category, string Quantity)
     {
         this.Id = Id;
         this.Name = Name;
@@ -20,6 +22,7 @@ public class ShopItem{
         this.Picture = Picture;
         this.Price = Price;
         this.Option = Option;
+        this.Category = Category;
         this.Quantity = Quantity;
 
         

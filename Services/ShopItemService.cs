@@ -13,16 +13,16 @@ public class ShopItemService{
 
 ///Default Values
     private List<ShopItem> ShopItems= new List<ShopItem> () {
-        new ShopItem("1", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("2", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("3", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("4", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("5", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("6", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("7", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("8", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("9", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1"),
-        new ShopItem("10", "Item 1 name", "Short description","Long description","Picture","Price","Black", "1")
+        new ShopItem("1", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("2", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("3", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("4", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("5", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("6", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("7", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("8", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("9", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1"),
+        new ShopItem("10", "Item 1 name", "Short description","Long description","Picture","Price","Black","Books", "1")
 
     };
 
