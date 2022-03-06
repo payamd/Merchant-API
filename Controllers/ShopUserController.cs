@@ -69,20 +69,18 @@ public async Task<ActionResult> Delete (string Id){
 }
 
 
-[HttpPut("U{id}")]
-public async Task<ActionResult> Update2(string Id, ShopUser updatedShopUser){
+[HttpPut("Add{id}")]
+public async Task<ActionResult> AddItem(string Id, int itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
     }
-    updatedShopUser.Id = ShopUser.Id;
-
-    bool updated = await _ShopUserService.Update2Async(Id,updatedShopUser);
+    bool updated = await _ShopUserService.AddItemAsync(Id,itemId);
     if (!updated){
-        // object not found is the only reaon for this return we can change it in future :>
+        // this is a good place to add some new code
         return NotFound();
     }
-    return NoContent();
+    return Ok();
 }
 
 

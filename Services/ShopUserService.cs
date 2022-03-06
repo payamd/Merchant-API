@@ -62,12 +62,12 @@ public async Task<bool> DeleteAsync(string Id){
 }
 
 /// AddItem method
-public async Task<bool> Update2Async (string Id, ShopUser UpdatedShopUser){
+public async Task<bool> AddItemAsync (string Id , int itemId){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
-        UpdatedShopUser.Id = Id;
-        ShopUsers[index]= UpdatedShopUser;
+//        UpdatedShopUser.Id = Id;
+        ShopUsers[index].ShoppingBag.Add(itemId);
         result=true;
     }
 

@@ -11,7 +11,9 @@ public class ShopUser{
     public string Password { get; set; }
     public string ShopUserRole { get; set; }
     public bool Authorize { get; set; }
-    public List<ShopItem> ShoppingBag { get; set; }
+    public List<int> ShoppingBag { get; set; }
+
+    //public List<ShopItem> ShoppingBag { get; set; }
 
     public ShopUser (string Id, string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,string ShopUserRole, bool Authorize)
@@ -26,7 +28,8 @@ public class ShopUser{
         this.Password = Password;
         this.ShopUserRole= ShopUserRole;
         this.Authorize = Authorize;
-        this.ShoppingBag = new List<ShopItem>();
+        this.ShoppingBag = new List<int>();
+        //this.ShoppingBag = new List<ShopItem>();
         //this.ShoppingBag.add(ShoppingBag);
 
 
