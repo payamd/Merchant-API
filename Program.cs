@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<TodoService>();
 builder.Services.AddSingleton<ShopItemService>();
 builder.Services.AddSingleton<ShopUserService>();
+builder.Services.AddSingleton<ChatService>();
+
 
 var app = builder.Build();
 

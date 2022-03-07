@@ -61,7 +61,7 @@ public async Task<bool> DeleteAsync(string Id){
 
 }
 
-/// AddItem method
+/// AddItemtobag method
 public async Task<bool> AddItemAsync (string Id , int itemId){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -76,7 +76,7 @@ public async Task<bool> AddItemAsync (string Id , int itemId){
 }
 
 
-/// removeItem method
+/// removeItemfrombag method
 public async Task<bool> RemoveItemAsync (string Id , int itemId){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
