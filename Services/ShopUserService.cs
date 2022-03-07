@@ -106,6 +106,17 @@ public async Task<bool> LoginAsync (string Id , string Email, string Password){
 
 }
 
+/// logout method
+public async Task<bool> LogoutAsync (string Id){
+    bool result = false;
+    int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    if (index != -1){
+        ShopUsers[index].IsLoggedIn = false;
+        result=true;} 
+    return result;
+
+}
+
 
 
 }

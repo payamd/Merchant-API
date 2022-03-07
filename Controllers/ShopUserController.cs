@@ -114,6 +114,21 @@ public async Task<ActionResult> Login(string Id, string Email, string Password){
     return Ok("Status: Ok");
 }
 
+//loggout item
+[HttpPost("logout{id}")]
+public async Task<ActionResult> Loginout(string Id){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    bool updated = await _ShopUserService.LogoutAsync(Id);
+    if (!updated){
+        // this is a good place to add some new code
+        return NotFound();
+    }
+    return Ok("Status: Ok");
+}
+
 
 
 
