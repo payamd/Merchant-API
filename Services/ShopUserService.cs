@@ -83,12 +83,25 @@ public async Task<bool> RemoveItemAsync (string Id , int itemId){
     if (index != -1){
 //        UpdatedShopUser.Id = Id;
     int itemindex = ShopUsers[index].ShoppingBag.FindIndex(x=> x == itemId);
-    
+
      if (itemindex != -1){
         ShopUsers[index].ShoppingBag.RemoveAt(itemindex);
         result=true;}
     }
 
+    return result;
+
+}
+
+/// login method
+public async Task<bool> LoginAsync (string Id , string Email, string Password){
+    bool result = false;
+    int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    if (index != -1){
+        if( ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
+        ShopUsers[index].IsLoggedIn = true;
+        result=true;}
+        }
     return result;
 
 }

@@ -99,6 +99,22 @@ public async Task<ActionResult> RemoveItem(string Id, int itemId){
     return Ok("Status: Ok");
 }
 
+//loggin item
+[HttpPost("login{id}")]
+public async Task<ActionResult> Login(string Id, string Email, string Password){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    bool updated = await _ShopUserService.LoginAsync(Id,Email, Password);
+    if (!updated){
+        // this is a good place to add some new code
+        return NotFound();
+    }
+    return Ok("Status: Ok");
+}
+
+
 
 
 }
