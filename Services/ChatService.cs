@@ -23,6 +23,13 @@ public async Task CreateAsynce (Chat newChat){
 }
 
 
+/// Create Method with keys
+public async Task CreatewithkeysAsynce (string Name,string Content){
+    int id = Chats.Count();
+    id = id+1;
+    Chat newmessage = new Chat(id,Name,Content);
+    Chats.Add(newmessage);
+}
 
 /// Get all method
 public async Task<List<Chat>> GetAsync(){
