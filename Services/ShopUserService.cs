@@ -74,4 +74,25 @@ public async Task<bool> AddItemAsync (string Id , int itemId){
     return result;
 
 }
+
+
+/// removeItem method
+public async Task<bool> RemoveItemAsync (string Id , int itemId){
+    bool result = false;
+    int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    if (index != -1){
+//        UpdatedShopUser.Id = Id;
+    int itemindex = ShopUsers[index].ShoppingBag.FindIndex(x=> x == itemId);
+    
+     if (itemindex != -1){
+        ShopUsers[index].ShoppingBag.RemoveAt(itemindex);
+        result=true;}
+    }
+
+    return result;
+
+}
+
+
+
 }

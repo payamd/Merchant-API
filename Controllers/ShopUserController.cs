@@ -84,6 +84,20 @@ public async Task<ActionResult> AddItem(string Id, int itemId){
 }
 
 
+//remove item
+[HttpPost("Remove{id}")]
+public async Task<ActionResult> RemoveItem(string Id, int itemId){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    bool updated = await _ShopUserService.RemoveItemAsync(Id,itemId);
+    if (!updated){
+        // this is a good place to add some new code
+        return NotFound();
+    }
+    return Ok("Status: Ok");
+}
 
 
 
