@@ -13,8 +13,8 @@ public class ShopUserService{
 
 ///Default Values
     private List<ShopUser> ShopUsers = new List<ShopUser> () {
-        new ShopUser("1", "username1", "Profile Picture1","Phone Number1","Email1","Address1","Zipcode", "Password",true, false),
-        new ShopUser("2", "username2", "Profile Picture2","Phone Number2","Email2","Address2","Zipcode", "Password",false, false)
+        new ShopUser(1, "username1", "Profile Picture1","Phone Number1","Email1","Address1","Zipcode", "Password",true, false),
+        new ShopUser(2, "username2", "Profile Picture2","Phone Number2","Email2","Address2","Zipcode", "Password",false, false)
     };
 
 /// Create Method
@@ -28,12 +28,12 @@ public async Task<List<ShopUser>> GetAsync(){
 }
 
 /// get one method
-public async Task<ShopUser> GetAsync( string Id){
+public async Task<ShopUser> GetAsync( int Id){
 
     return ShopUsers.Find(x => x.Id == Id);
 }
 /// Update method
-public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
+public async Task<bool> UpdateAsync (int Id, ShopUser UpdatedShopUser){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
@@ -49,7 +49,7 @@ public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
 
 
 /// Detele method
-public async Task<bool> DeleteAsync(string Id){
+public async Task<bool> DeleteAsync(int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
@@ -62,7 +62,7 @@ public async Task<bool> DeleteAsync(string Id){
 }
 
 /// AddItemtobag method
-public async Task<bool> AddItemAsync (string Id , int itemId){
+public async Task<bool> AddItemAsync (int Id , int itemId){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
@@ -77,7 +77,7 @@ public async Task<bool> AddItemAsync (string Id , int itemId){
 
 
 /// removeItemfrombag method
-public async Task<bool> RemoveItemAsync (string Id , int itemId){
+public async Task<bool> RemoveItemAsync (int Id , int itemId){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
@@ -94,7 +94,7 @@ public async Task<bool> RemoveItemAsync (string Id , int itemId){
 }
 
 /// login method
-public async Task<bool> LoginAsync (string Id , string Email, string Password){
+public async Task<bool> LoginAsync (int Id , string Email, string Password){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
@@ -107,7 +107,7 @@ public async Task<bool> LoginAsync (string Id , string Email, string Password){
 }
 
 /// logout method
-public async Task<bool> LogoutAsync (string Id){
+public async Task<bool> LogoutAsync (int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
