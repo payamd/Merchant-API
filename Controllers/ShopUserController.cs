@@ -99,7 +99,7 @@ public async Task<ActionResult> RemoveItem(int Id, int itemId){
     return Ok("Status: Ok");
 }
 
-//loggin item
+//loggin 
 [HttpPost("login{id}")]
 public async Task<ActionResult> Login(int Id, string Email, string Password){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -114,7 +114,7 @@ public async Task<ActionResult> Login(int Id, string Email, string Password){
     return Ok("Status: Ok");
 }
 
-//loggout item
+//loggout
 [HttpPost("logout{id}")]
 public async Task<ActionResult> Loginout(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
