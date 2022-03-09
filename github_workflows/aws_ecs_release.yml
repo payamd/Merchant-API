@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: 
+  ECR_REPOSITORY: 236328802490.dkr.ecr.us-east-1.amazonaws.com
   ECS_SERVICE: 
   ECS_CLUSTER: 
 
@@ -22,9 +22,14 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets. }}
-        aws-secret-access-key: ${{ secrets. }}
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.AWS_ACCESS_KEY_SECRET}}
         aws-region: ${{ env.AWS_REGION }}
         
     - name: Docker build
-      run: 
+      run: |
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 236328802490.dkr.ecr.us-east-1.amazonaws.com
+        docker build -t csi5112service .
+        docker tag csi5112service:latest 236328802490.dkr.ecr.us-east-1.amazonaws.com/csi5112service:latest
+        docker push 236328802490.dkr.ecr.us-east-1.amazonaws.com/csi5112service:latest
+        aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment --region $AWS_REGION
