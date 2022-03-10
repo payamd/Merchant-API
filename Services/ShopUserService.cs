@@ -28,9 +28,11 @@ public async Task<List<ShopUser>> GetAsync(){
 }
 
 /// get one method
-public async Task<ShopUser> GetAsync( int Id){
+public async Task<List<ShopUser>> GetAsync( int Id){
 
-    return ShopUsers.Find(x => x.Id == Id);
+    List<ShopUser> List1 = new List<ShopUser>();
+    List1.Add(ShopUsers.Find(x => x.Id == Id));
+    return List1;
 }
 /// Update method
 public async Task<bool> UpdateAsync (int Id, ShopUser UpdatedShopUser){
