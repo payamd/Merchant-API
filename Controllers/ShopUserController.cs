@@ -40,6 +40,25 @@ public async Task<ActionResult> Post(ShopUser newShopUser){
 
 }
 
+
+[HttpPost("Createbykeys")]
+public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, string PhoneNumber,
+    string Email, string Address,string Zipcode, string Password,bool IsBuyer){
+    var Id=-1; 
+    var ShopUsers = await _ShopUserService.GetAsync();
+    await _ShopUserService.CreatebykeysAsynce(Name, ProfilePicture, PhoneNumber,
+    Email, Address, Zipcode, Password, IsBuyer);
+
+    foreach (var user in ShopUsers)
+    {
+        if(user.Email == Email)
+        Id=user.Id;
+    }
+
+    return Ok(Id);
+
+}
+
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(int Id, ShopUser updatedShopUser){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
@@ -101,19 +120,55 @@ public async Task<ActionResult> RemoveItem(int Id, int itemId){
     return Ok("Status: Ok");
 }
 
-//loggin 
-[HttpPost("login{id}")]
-public async Task<ActionResult> Login(int Id, string Email, string Password){
+
+//remove All item
+[HttpPost("RAll{id}")]
+public async Task<ActionResult> RemoveAllItem(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
     }
-    bool updated = await _ShopUserService.LoginAsync(Id,Email, Password);
+    bool updated = await _ShopUserService.RemoveAllItemAsync(Id);
     if (!updated){
         // this is a good place to add some new code
         return NotFound();
     }
     return Ok("Status: Ok");
+}
+
+
+//loggin 
+[HttpPost("login")]
+public async Task<ActionResult> Login(string Email, string Password){
+    //var ShopUsers = await _ShopUserService.getAllUsersAsync();
+
+    //foreach user in ShopUsers{}
+    var Id=-1; 
+
+    var ShopUsers = await _ShopUserService.GetAsync();
+    if (ShopUsers is null) {
+        return NotFound();
+    } else{
+        foreach (var user in ShopUsers)
+        {
+            if (user.Email == Email){
+                Id = user.Id;
+            }
+            
+        }
+    }
+    if (Id!=-1){
+     bool updated = await _ShopUserService.LoginAsync(Id, Email, Password);
+    if (!updated){
+        // this is a good place to add some new code
+        return NotFound();
+    }
+    return Ok(Id);
+
+    }else{
+            return NotFound();
+    }
+
 }
 
 //loggout

@@ -22,6 +22,27 @@ public async Task CreateAsynce (ShopUser newShopUser){
     ShopUsers.Add(newShopUser);
 }
 
+public async Task CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
+    string Email, string Address,string Zipcode, string Password,bool IsBuyer){
+    bool flag = true;
+
+    foreach(var user in ShopUsers){
+        if (user.Email == Email){
+            flag = false;
+        }
+    }
+
+    int Id = ShopUsers.Count();
+ if (flag == true){
+    Id = Id+1;
+    bool IsLoggedIn = false;
+    ShopUser newShopUser = new ShopUser(Id, Name,ProfilePicture, PhoneNumber, Email, Address, Zipcode, Password, IsBuyer, IsLoggedIn);
+    ShopUsers.Add(newShopUser);
+ }
+
+}
+
+
 /// Get all method
 public async Task<List<ShopUser>> GetAsync(){
     return ShopUsers;
@@ -95,12 +116,27 @@ public async Task<bool> RemoveItemAsync (int Id , int itemId){
 
 }
 
+
+/// removeAllItemfrombag method
+public async Task<bool> RemoveAllItemAsync (int Id){
+    bool result = false;
+    int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    if (index != -1){
+//        UpdatedShopUser.Id = Id;
+        ShopUsers[index].ShoppingBag.Clear();
+        result=true;
+        }
+
+    return result;
+
+}
+
 /// login method
 public async Task<bool> LoginAsync (int Id , string Email, string Password){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
-        if( ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
+        if( ShopUsers[index].IsLoggedIn = false && ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
         ShopUsers[index].IsLoggedIn = true;
         result=true;}
         }
