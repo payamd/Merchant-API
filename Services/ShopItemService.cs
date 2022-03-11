@@ -41,6 +41,15 @@ public async Task CreateAsynce (ShopItem newShopItem){
     ShopItems.Add(newShopItem);
 }
 
+public async Task CreatebykeysAsynce (string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
+    int Id = ShopItems.Count();
+    Id = Id+1;
+    ShopItem newShopItem = new ShopItem (Id, Name, ShortDescription, Description, Picture, Price, Option, Category, Quantity);
+    ShopItems.Add(newShopItem);
+
+    }
+
+
 /// Get all method
 public async Task<List<ShopItem>> GetAsync(){
     return ShopItems;

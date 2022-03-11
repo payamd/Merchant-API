@@ -40,6 +40,14 @@ public async Task<ActionResult> Post(ShopItem newShopItem){
 
 }
 
+[HttpPost("CreatebyKeys")]
+public async Task<ActionResult> Createbykeys(string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
+    var ShopUsers = await _ShopItemService.GetAsync();
+    await _ShopItemService.CreatebykeysAsynce(Name, ShortDescription, Description, Picture, Price, Option, Category, Quantity);
+    return Ok("Status: Ok");
+}
+
+
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
     var ShopItem = await _ShopItemService.GetAsync(Id);
