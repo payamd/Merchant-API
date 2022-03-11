@@ -11,7 +11,8 @@ public class ShopUser{
     public string Password { get; set; }
     public bool IsBuyer { get; set; }
     public bool IsLoggedIn { get; set; }
-    public List<int> ShoppingBag { get; set; }
+    public List<ShopItem> ShoppingBag { get; set; }
+    
 
     //public List<ShopItem> ShoppingBag { get; set; }
 
@@ -28,7 +29,7 @@ public class ShopUser{
         this.Password = Password;
         this.IsBuyer= IsBuyer;
         this.IsLoggedIn = IsLoggedIn;
-        this.ShoppingBag = new List<int>();
+        this.ShoppingBag = new List<ShopItem>();
         //this.ShoppingBag = new List<ShopItem>();
         //this.ShoppingBag.add(ShoppingBag);
 

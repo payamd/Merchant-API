@@ -7,6 +7,7 @@ public class ShopUserService{
     /// ctor
     public ShopUserService()
     {
+     
         
     }
 
@@ -87,10 +88,11 @@ public async Task<bool> DeleteAsync(int Id){
 /// AddItemtobag method
 public async Task<bool> AddItemAsync (int Id , int itemId){
     bool result = false;
-    int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    if (index != -1){
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x=> x.Id == itemId);
+    if (userindex != -1 && itemindex != -1){
 //        UpdatedShopUser.Id = Id;
-        ShopUsers[index].ShoppingBag.Add(itemId);
+        ShopUsers[userindex].ShoppingBag.Add(Merchant_API.services.ShopItemService.ShopItems[itemindex]);
         result=true;
     }
 
@@ -100,17 +102,20 @@ public async Task<bool> AddItemAsync (int Id , int itemId){
 
 
 /// removeItemfrombag method
-public async Task<bool> RemoveItemAsync (int Id , int itemId){
+public async Task<bool> RemoveItemAsync(int Id , int itemId){
     bool result = false;
-    int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-//        UpdatedShopUser.Id = Id;
-    int itemindex = ShopUsers[index].ShoppingBag.FindIndex(x=> x == itemId);
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x=> x.Id == itemId);
+    if (userindex != -1 && itemindex != -1){
 
-     if (itemindex != -1){
-        ShopUsers[index].ShoppingBag.RemoveAt(itemindex);
-        result=true;}
+        int itemindex2 = ShopUsers[userindex].ShoppingBag.FindIndex(x=> x.Id == itemId);
+
+     if (itemindex2 != -1){
+        ShopUsers[userindex].ShoppingBag.RemoveAt(itemindex2);
+        result=true;
+        }
     }
+
 
     return result;
 
