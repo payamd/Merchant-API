@@ -136,6 +136,23 @@ public async Task<ActionResult> RemoveAllItem(int Id){
     return Ok("Status: Ok");
 }
 
+
+//Invoice
+[HttpPost("Invoice{id}")]
+public async Task<ActionResult> Invoice(int Id){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    var updated = await _ShopUserService.InvoiceAsync(Id);
+    if (updated.Count == 0){
+        // this is a good place to add some new code
+        return NotFound("there is no Item in your bag!");
+    }
+    return Ok(updated);
+}
+
+
 //CheckOut
 [HttpPost("CheckOut{id}")]
 public async Task<ActionResult> CheckOut(int Id){

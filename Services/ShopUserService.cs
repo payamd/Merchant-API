@@ -183,6 +183,25 @@ public async Task<int> CheckOutAsync (int Id){
 }
 
 
+
+/// Invoice method
+public async Task<List<ShopItem>> InvoiceAsync (int Id){
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    List<ShopItem> Invoiceitems = new List<ShopItem>();
+    if (userindex != -1){
+//        UpdatedShopUser.Id = Id;
+    foreach (var item in ShopUsers[userindex].ShoppingBag)
+    {
+        Invoiceitems.Add(item);
+    }
+    }
+    return Invoiceitems;
+
+}
+
+
+
+
 /// removeAllItemfromOrderHistory method
 public async Task<bool> RemoveAllOrderHistoryAsync (int Id){
     bool result = false;
