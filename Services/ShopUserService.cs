@@ -162,4 +162,42 @@ public async Task<bool> LogoutAsync (int Id){
 
 
 
+/// CheckOut method
+public async Task<int> CheckOutAsync (int Id){
+    int  sum = 0;
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    List<ShopItem> checkoutitems = new List<ShopItem>();
+    if (userindex != -1){
+//        UpdatedShopUser.Id = Id;
+    foreach (var item in ShopUsers[userindex].ShoppingBag)
+    {
+        sum += Int32.Parse(item.Price.TrimStart( new Char[] { ' ', '$' } ));
+        checkoutitems.Add(item);
+    }
+        ShopUsers[userindex].OrderHistory.Add(checkoutitems);
+        ShopUsers[userindex].ShoppingBag.Clear();
+    }
+
+    return sum;
+
+}
+
+
+/// removeAllItemfromOrderHistory method
+public async Task<bool> RemoveAllOrderHistoryAsync (int Id){
+    bool result = false;
+
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    if (userindex != -1){
+//        UpdatedShopUser.Id = Id;
+        ShopUsers[userindex].OrderHistory.Clear();
+        result=true;
+    }
+
+    return result;
+
+}
+
+
+
 }

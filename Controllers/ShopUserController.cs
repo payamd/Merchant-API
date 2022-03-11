@@ -136,6 +136,37 @@ public async Task<ActionResult> RemoveAllItem(int Id){
     return Ok("Status: Ok");
 }
 
+//CheckOut
+[HttpPost("CheckOut{id}")]
+public async Task<ActionResult> CheckOut(int Id){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    var updated = await _ShopUserService.CheckOutAsync(Id);
+    if (updated == 0){
+        // this is a good place to add some new code
+        return NotFound("there is no Item in your bag!");
+    }
+    return Ok("Status: Ok - total price  = " + updated);
+}
+
+
+//remove All orderHistory
+[HttpPost("RAO{id}")]
+public async Task<ActionResult> RemoveAllOrderHistory(int Id){
+    var ShopUser = await _ShopUserService.GetAsync(Id);
+    if (ShopUser is null) {
+        return NotFound();
+    }
+    bool updated = await _ShopUserService.RemoveAllOrderHistoryAsync(Id);
+    if (!updated){
+        // this is a good place to add some new code
+        return NotFound();
+    }
+    return Ok("Status: Ok");
+}
+
 
 //loggin 
 [HttpPost("login")]
