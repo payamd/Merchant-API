@@ -1,0 +1,11 @@
+C:\projects\Merchant-API\out\Merchant-API.exe
+C:\projects\Merchant-API\out\appsettings.Development.json
+C:\projects\Merchant-API\out\appsettings.json
+C:\projects\Merchant-API\out\Merchant-API.dll
+C:\projects\Merchant-API\out\Merchant-API.deps.json
+C:\projects\Merchant-API\out\Merchant-API.runtimeconfig.json
+C:\projects\Merchant-API\out\Merchant-API.pdb
+C:\projects\Merchant-API\out\Microsoft.OpenApi.dll
+C:\projects\Merchant-API\out\Swashbuckle.AspNetCore.Swagger.dll
+C:\projects\Merchant-API\out\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\projects\Merchant-API\out\Swashbuckle.AspNetCore.SwaggerUI.dll

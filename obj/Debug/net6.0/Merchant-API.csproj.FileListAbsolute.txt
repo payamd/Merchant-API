@@ -25,3 +25,8 @@ C:\projects\Merchant-API\obj\Debug\net6.0\Merchant-API.dll
 C:\projects\Merchant-API\obj\Debug\net6.0\ref\Merchant-API.dll
 C:\projects\Merchant-API\obj\Debug\net6.0\Merchant-API.pdb
 C:\projects\Merchant-API\obj\Debug\net6.0\Merchant-API.genruntimeconfig.cache
+C:\projects\Merchant-API\bin\Debug\net6.0\out\web.config
+C:\projects\Merchant-API\bin\Debug\net6.0\out\appsettings.Development.json
+C:\projects\Merchant-API\bin\Debug\net6.0\out\appsettings.json
+C:\projects\Merchant-API\bin\Debug\net6.0\out\Merchant-API.deps.json
+C:\projects\Merchant-API\bin\Debug\net6.0\out\Merchant-API.runtimeconfig.json
