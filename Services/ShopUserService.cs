@@ -141,7 +141,7 @@ public async Task<bool> LoginAsync (int Id , string Email, string Password){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
-        if( ShopUsers[index].IsLoggedIn = false && ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
+        if( ShopUsers[index].IsLoggedIn == false && ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
         ShopUsers[index].IsLoggedIn = true;
         result=true;}
         }
@@ -161,29 +161,6 @@ public async Task<bool> LogoutAsync (int Id){
 }
 
 
-
-/// CheckOut method
-public async Task<int> CheckOutAsync (int Id){
-    int  sum = 0;
-    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
-    List<ShopItem> checkoutitems = new List<ShopItem>();
-    if (userindex != -1){
-//        UpdatedShopUser.Id = Id;
-    foreach (var item in ShopUsers[userindex].ShoppingBag)
-    {
-        sum += Int32.Parse(item.Price.TrimStart( new Char[] { ' ', '$' } ));
-        checkoutitems.Add(item);
-    }
-        ShopUsers[userindex].OrderHistory.Add(checkoutitems);
-        ShopUsers[userindex].ShoppingBag.Clear();
-    }
-
-    return sum;
-
-}
-
-
-
 /// Invoice method
 public async Task<List<ShopItem>> InvoiceAsync (int Id){
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -200,6 +177,27 @@ public async Task<List<ShopItem>> InvoiceAsync (int Id){
 }
 
 
+/// CheckOut method
+public async Task<int> CheckOutAsync (int Id){
+    int  sum = 0;
+    int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
+    List<ShopItem> checkoutitems = new List<ShopItem>();
+    if (userindex != -1){
+//        UpdatedShopUser.Id = Id;
+    foreach (var item in ShopUsers[userindex].ShoppingBag)
+    {
+        sum += Int32.Parse(item.Price.TrimStart( new Char[] { ' ', '$' } ));
+        checkoutitems.Add(item);
+    }
+        var time = DateTime.Now.ToString();
+        ShopUsers[userindex].OrderHistory.Add(Tuple.Create(checkoutitems,time));
+        //ShopUsers[userindex].OrderHistory.Add(checkoutitems);
+        ShopUsers[userindex].ShoppingBag.Clear();
+    }
+
+    return sum;
+
+}
 
 
 /// removeAllItemfromOrderHistory method

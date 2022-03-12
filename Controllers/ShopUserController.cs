@@ -195,7 +195,7 @@ public async Task<ActionResult> Login(string Email, string Password){
 
     var ShopUsers = await _ShopUserService.GetAsync();
     if (ShopUsers is null) {
-        return NotFound();
+        return NotFound("there is no user in the database!");
     } else{
         foreach (var user in ShopUsers)
         {
@@ -206,16 +206,14 @@ public async Task<ActionResult> Login(string Email, string Password){
         }
     }
     if (Id!=-1){
-     bool updated = await _ShopUserService.LoginAsync(Id, Email, Password);
-    if (!updated){
-        // this is a good place to add some new code
-        return NotFound();
-    }
-    return Ok(Id);
+                bool updated = await _ShopUserService.LoginAsync(Id, Email, Password);
+                 if (!updated){
+                     // this is a good place to add some new code
+                     return NotFound("we dont have that user in the database or your password is wrong");
+                              }
+                     return Ok(Id);}
 
-    }else{
-            return NotFound();
-    }
+     else{return NotFound("we dont have that user!");}
 
 }
 
