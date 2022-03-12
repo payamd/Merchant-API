@@ -12,8 +12,8 @@ public class ShopUser{
     public bool IsBuyer { get; set; }
     public bool IsLoggedIn { get; set; }
     public List<ShopItem> ShoppingBag { get; set; }
-    //public List<List<ShopItem>> OrderHistory { get; set; }
-    public List<Tuple<List<ShopItem>,string>> OrderHistory { get; set; }
+    public List<List<ShopItem>> OrderHistory { get; set; }
+    // public List<Tuple<List<ShopItem>,string>> OrderHistory { get; set; }
 
     public ShopUser (int Id, string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer, bool IsLoggedIn)
@@ -29,9 +29,10 @@ public class ShopUser{
         this.IsBuyer= IsBuyer;
         this.IsLoggedIn = IsLoggedIn;
         this.ShoppingBag = new List<ShopItem>();
-        this.OrderHistory =  new List<Tuple<List<ShopItem>, string>>();
-
-       // this.OrderHistory =  new List<List<ShopItem>>();
+        this.OrderHistory =  new List<List<ShopItem>>();
+        
+        //this.OrderHistory =  new List<Tuple<List<ShopItem>, string>>();
+       
 
         //this.ShoppingBag = new List<ShopItem>();
         //this.ShoppingBag.add(ShoppingBag);

@@ -190,8 +190,8 @@ public async Task<int> CheckOutAsync (int Id){
         checkoutitems.Add(item);
     }
         var time = DateTime.Now.ToString();
-        ShopUsers[userindex].OrderHistory.Add(Tuple.Create(checkoutitems,time));
-        //ShopUsers[userindex].OrderHistory.Add(checkoutitems);
+        //ShopUsers[userindex].OrderHistory.Add(Tuple.Create(checkoutitems,time));
+        ShopUsers[userindex].OrderHistory.Add(checkoutitems);
         ShopUsers[userindex].ShoppingBag.Clear();
     }
 
