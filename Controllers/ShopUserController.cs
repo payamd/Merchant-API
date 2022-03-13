@@ -46,7 +46,7 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
     var Id=-1; 
     var ShopUsers = await _ShopUserService.GetAsync();
-    await _ShopUserService.CreatebykeysAsynce(Name, ProfilePicture, PhoneNumber,
+    var result = await _ShopUserService.CreatebykeysAsynce(Name, ProfilePicture, PhoneNumber,
     Email, Address, Zipcode, Password, IsBuyer);
 
     foreach (var user in ShopUsers)
@@ -54,8 +54,12 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
         if(user.Email == Email)
         Id=user.Id;
     }
-
-    return Ok(Id);
+ if (result==true){    
+     return Ok(Id);
+     }
+ else{
+         return NotFound("User already exist in Database!");
+ }
 
 }
 

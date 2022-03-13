@@ -23,7 +23,7 @@ public async Task CreateAsynce (ShopUser newShopUser){
     ShopUsers.Add(newShopUser);
 }
 
-public async Task CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
+public async Task<bool> CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
     bool flag = true;
 
@@ -40,6 +40,7 @@ public async Task CreatebykeysAsynce (string Name,string ProfilePicture, string 
     ShopUser newShopUser = new ShopUser(Id, Name,ProfilePicture, PhoneNumber, Email, Address, Zipcode, Password, IsBuyer, IsLoggedIn);
     ShopUsers.Add(newShopUser);
  }
+return flag;
 
 }
 
