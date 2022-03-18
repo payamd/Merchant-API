@@ -77,6 +77,43 @@ public async Task<ActionResult> Delete (int Id){
 }
 
 
+[HttpPost("ChangeCategory")]
+public async Task<ActionResult> ChangeCategory (string oldcat, string newcat){
+    var ShopItem = await _ShopItemService.ChangeCategoryAsync( oldcat, newcat);
+    if (ShopItem == false) {
+        return NotFound();
+    }else{
+        return Ok("Status: Ok");
+    }
+
+    
+}
+
+[HttpPost("DeleteCategory")]
+public async Task<ActionResult> DeleteCategory (string cat){
+    var ShopItem = await _ShopItemService.DeleteCategoryAsync(cat);
+    if (ShopItem == false) {
+        return NotFound();
+    }else{
+        return Ok("Status: Ok");
+    }
+
+    
+}
+
+
+[HttpPost("DeleteUncategorized")]
+public async Task<ActionResult> DeleteUncategorized (){
+    var ShopItem = await _ShopItemService.DeleteUncategorizedAsync();
+    if (ShopItem == false) {
+        return NotFound();
+    }else{
+        return Ok("Status: Ok");
+    }
+
+    
+}
+
 
 
 }

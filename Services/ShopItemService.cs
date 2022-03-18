@@ -88,6 +88,50 @@ public async Task<bool> DeleteAsync(int Id){
 
 }
 
+public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
+    bool result = false;
+    foreach(var item in ShopItems){
+        if(item.Category.ToLower() == oldcat.ToLower())
+        item.Category=newcat;
+        result=true;
+    }
+
+    return result;
+
+}
+
+
+public async Task<bool> DeleteCategoryAsync (string cat){
+    bool result = false;
+    foreach(var item in ShopItems){
+        if(item.Category.ToLower() == cat.ToLower())
+        item.Category="Uncategorized";
+        result=true;
+    }
+
+    return result;
+
+}
+public async Task<bool> DeleteUncategorizedAsync (){
+    bool result = false;
+    bool flag=false;
+    List<ShopItem> list1 = new List<ShopItem>();
+    string s1= "Uncategorized";
+    foreach(var item in ShopItems){
+        if(item.Category.ToLower() == s1.ToLower()){
+        list1.Add(item);
+        flag=true;
+        }
+    }
+    if(flag==true){
+        ShopItems.RemoveAll(x => list1.Contains(x));
+        result = true;}
+     
+    
+
+    return result;
+
+}
 
 
 
