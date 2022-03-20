@@ -141,7 +141,7 @@ public async Task<bool> RemoveAllItemAsync (int Id){
 public async Task<int> LoginAsync (int Id , string Email, string Password){
     int result = 0;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
-
+// check if user is already logged in
     if( ShopUsers[index].IsLoggedIn == true)
     result = -1;
 
@@ -150,6 +150,10 @@ public async Task<int> LoginAsync (int Id , string Email, string Password){
         ShopUsers[index].IsLoggedIn = true;
         result=1;}
         }
+    // force logout multiple login
+    if (result == -1)
+    ShopUsers[index].IsLoggedIn = false;
+
     return result;
 
 }
