@@ -36,11 +36,11 @@ public class ShopItemService{
 
     };
 
-/// Create Method
+/// Create item Method
 public async Task CreateAsynce (ShopItem newShopItem){
     ShopItems.Add(newShopItem);
 }
-
+/// Create item by value keys Method
 public async Task CreatebykeysAsynce (string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
     int Id = ShopItems.Count();
     Id = Id+1;
@@ -50,17 +50,17 @@ public async Task CreatebykeysAsynce (string Name, string ShortDescription, stri
     }
 
 
-/// Get all method
+/// Get all shop items method
 public async Task<List<ShopItem>> GetAsync(){
     return ShopItems;
 }
 
-/// get one method
+/// get one shop item by id method
 public async Task<ShopItem> GetAsync( int Id){
 
     return ShopItems.Find(x => x.Id == Id);
 }
-/// Update method
+/// Update shop item method
 public async Task<bool> UpdateAsync (int Id, ShopItem UpdatedShopItem){
     bool result = false;
     int index = ShopItems.FindIndex(x=> x.Id == Id);
@@ -75,7 +75,7 @@ public async Task<bool> UpdateAsync (int Id, ShopItem UpdatedShopItem){
 }
 
 
-/// Detele method
+/// Detele shop item by id method
 public async Task<bool> DeleteAsync(int Id){
     bool result = false;
     int index = ShopItems.FindIndex(x=> x.Id == Id);
@@ -87,7 +87,7 @@ public async Task<bool> DeleteAsync(int Id){
     return result;
 
 }
-
+// change cathegory from old name to new name by value keys
 public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
     bool result = false;
     foreach(var item in ShopItems){
@@ -100,6 +100,7 @@ public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
 
 }
 
+// delete category by the name of the choosen category
 
 public async Task<bool> DeleteCategoryAsync (string cat){
     bool result = false;
@@ -112,6 +113,8 @@ public async Task<bool> DeleteCategoryAsync (string cat){
     return result;
 
 }
+// delete all uncategorize item from the shop
+
 public async Task<bool> DeleteUncategorizedAsync (){
     bool result = false;
     bool flag=false;
