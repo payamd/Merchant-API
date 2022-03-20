@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Merchant_API.services;
 using Merchant_API.models;
 
+/// this is our practice in the class
+
 [ApiController]
 /*[Route("api/[controller]")]*/
 //[Route("/")]
@@ -14,7 +16,7 @@ public class TodoController : ControllerBase {
         this._todoService=todoService;
     }
 
-
+//recieve all data!
 
 [HttpGet]
 public async Task<List<Todo>> Get(){
@@ -22,7 +24,7 @@ public async Task<List<Todo>> Get(){
 }
 
 
-
+//recieve data by id!
 [HttpGet("{id}")]
 public async Task<ActionResult<Todo>> Get(string Id){
     var todo = await _todoService.GetAsync(Id);
@@ -32,7 +34,7 @@ public async Task<ActionResult<Todo>> Get(string Id){
     return todo;
 }
 
-
+//make new todo
 [HttpPost]
 public async Task<ActionResult> Post(Todo newTodo){
     await _todoService.CreateAsynce(newTodo);
@@ -40,6 +42,7 @@ public async Task<ActionResult> Post(Todo newTodo){
 
 }
 
+//update by id
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(string Id, Todo updatedTodo){
     var todo = await _todoService.GetAsync(Id);
@@ -56,7 +59,7 @@ public async Task<ActionResult> Update(string Id, Todo updatedTodo){
     return NoContent();
 }
 
-
+//delete by id
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (string Id){
     var todo = await _todoService.GetAsync(Id);

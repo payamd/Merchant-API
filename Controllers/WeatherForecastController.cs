@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Merchant_API.Controllers;
+ 
+ // this is the default project!
 
 [ApiController]
 [Route("[controller]")]
@@ -17,7 +19,7 @@ public class WeatherForecastController : ControllerBase
     {
         _logger = logger;
     }
-
+// get weather forecast!
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {

@@ -1,4 +1,5 @@
 using Merchant_API.models;
+/// this is the practice we had in class
 
 namespace Merchant_API.services;
 

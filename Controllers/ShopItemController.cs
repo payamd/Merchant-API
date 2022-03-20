@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Merchant_API.services;
 using Merchant_API.models;
 
+// this is the shopItem API
+
 [ApiController]
 /*[Route("api/[controller]")]*/
 [Route("/")]
@@ -15,14 +17,14 @@ public class ShopItemController : ControllerBase {
     }
 
 
-
+// get all the shop items
 [HttpGet]
 public async Task<List<ShopItem>> Get(){
     return await _ShopItemService.GetAsync();
 }
 
 
-
+// get the shop item by id
 [HttpGet("{id}")]
 public async Task<ActionResult<ShopItem>> Get(int Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
@@ -32,7 +34,7 @@ public async Task<ActionResult<ShopItem>> Get(int Id){
     return ShopItem;
 }
 
-
+// create a new shop item
 [HttpPost]
 public async Task<ActionResult> Post(ShopItem newShopItem){
     await _ShopItemService.CreateAsynce(newShopItem);
@@ -40,6 +42,7 @@ public async Task<ActionResult> Post(ShopItem newShopItem){
 
 }
 
+// create a new shop item by keys
 [HttpPost("CreatebyKeys")]
 public async Task<ActionResult> Createbykeys(string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
     var ShopUsers = await _ShopItemService.GetAsync();
@@ -47,10 +50,11 @@ public async Task<ActionResult> Createbykeys(string Name, string ShortDescriptio
     return Ok("Status: Ok");
 }
 
-
+// update a shop item by id
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
     var ShopItem = await _ShopItemService.GetAsync(Id);
+    //check if it is null
     if (ShopItem is null) {
         return NotFound();
     }
@@ -64,7 +68,7 @@ public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
     return Ok("Status: Ok");
 }
 
-
+// delete a shop item by id
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (int Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
@@ -76,7 +80,7 @@ public async Task<ActionResult> Delete (int Id){
     return Ok("Status: Ok");
 }
 
-
+// change a category name
 [HttpPost("ChangeCategory")]
 public async Task<ActionResult> ChangeCategory (string oldcat, string newcat){
     var ShopItem = await _ShopItemService.ChangeCategoryAsync( oldcat, newcat);
@@ -89,6 +93,7 @@ public async Task<ActionResult> ChangeCategory (string oldcat, string newcat){
     
 }
 
+// delete a category
 [HttpPost("DeleteCategory")]
 public async Task<ActionResult> DeleteCategory (string cat){
     var ShopItem = await _ShopItemService.DeleteCategoryAsync(cat);
@@ -101,7 +106,7 @@ public async Task<ActionResult> DeleteCategory (string cat){
     
 }
 
-
+// delete all uncategorized items from the shop
 [HttpPost("DeleteUncategorized")]
 public async Task<ActionResult> DeleteUncategorized (){
     var ShopItem = await _ShopItemService.DeleteUncategorizedAsync();
