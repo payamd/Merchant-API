@@ -206,7 +206,7 @@ public async Task<ActionResult> Login(string Email, string Password){
     } else{
         foreach (var user in ShopUsers)
         {
-            if (user.Email == Email){
+            if (user.Email.ToLower() == Email.ToLower()){
                 Id = user.Id;
             }
             
