@@ -218,7 +218,7 @@ public async Task<ActionResult> Login(string Email, string Password){
                      // If we don't have a user in the database or the password is wrong
                      return NotFound("We dont have that user in the database or your password is wrong");
                               }else if (updated==-1){
-                                  return NotFound("The user is already logged in!");
+                                  return NotFound("For security reasons you logged out, please login again!");
                               }
                               return Ok(Id);
                      ;}
