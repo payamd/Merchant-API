@@ -138,13 +138,17 @@ public async Task<bool> RemoveAllItemAsync (int Id){
 }
 
 /// Login to the site method
-public async Task<bool> LoginAsync (int Id , string Email, string Password){
-    bool result = false;
+public async Task<int> LoginAsync (int Id , string Email, string Password){
+    int result = 0;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
+
+    if( ShopUsers[index].IsLoggedIn == true)
+    result = -1;
+
     if (index != -1){
         if( ShopUsers[index].IsLoggedIn == false && ShopUsers[index].Email.ToLower() == Email.ToLower() && ShopUsers[index].Password == Password ){
         ShopUsers[index].IsLoggedIn = true;
-        result=true;}
+        result=1;}
         }
     return result;
 
@@ -154,7 +158,7 @@ public async Task<bool> LoginAsync (int Id , string Email, string Password){
 public async Task<bool> LogoutAsync (int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    if (index != -1){
+    if (index != -1 && ShopUsers[index].IsLoggedIn == true){
         ShopUsers[index].IsLoggedIn = false;
         result=true;} 
     return result;

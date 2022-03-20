@@ -94,9 +94,9 @@ public async Task<bool> DeleteAsync(int Id){
 public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
     bool result = false;
     foreach(var item in ShopItems){
-        if(item.Category.ToLower() == oldcat.ToLower())
+        if(item.Category.ToLower() == oldcat.ToLower()){
         item.Category=newcat;
-        result=true;
+        result=true;}
     }
 
     return result;
@@ -108,9 +108,10 @@ public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
 public async Task<bool> DeleteCategoryAsync (string cat){
     bool result = false;
     foreach(var item in ShopItems){
-        if(item.Category.ToLower() == cat.ToLower())
+        if(item.Category.ToLower() == cat.ToLower()){
         item.Category="Uncategorized";
         result=true;
+        }
     }
 
     return result;

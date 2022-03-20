@@ -213,14 +213,17 @@ public async Task<ActionResult> Login(string Email, string Password){
         }
     }
     if (Id!=-1){
-                bool updated = await _ShopUserService.LoginAsync(Id, Email, Password);
-                 if (!updated){
+                int updated = await _ShopUserService.LoginAsync(Id, Email, Password);
+                 if (updated == 0){
                      // If we don't have a user in the database or the password is wrong
-                     return NotFound("we dont have that user in the database or your password is wrong");
+                     return NotFound("We dont have that user in the database or your password is wrong");
+                              }else if (updated==-1){
+                                  return NotFound("The user is already logged in!");
                               }
-                     return Ok(Id);}
+                              return Ok(Id);
+                     ;}
 
-     else{return NotFound("we dont have that user!");}
+     else{return NotFound("We dont have that user!");}
 
 }
 
