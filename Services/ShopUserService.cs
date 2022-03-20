@@ -22,17 +22,17 @@ public class ShopUserService{
 public async Task CreateAsynce (ShopUser newShopUser){
     ShopUsers.Add(newShopUser);
 }
-
+/// Create user by keys Method
 public async Task<bool> CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
     bool flag = true;
-
+/// check if the email exist
     foreach(var user in ShopUsers){
         if (user.Email == Email){
             flag = false;
         }
     }
-
+/// find the id
     int Id = ShopUsers.Count();
  if (flag == true){
     Id = Id+1;
@@ -45,19 +45,19 @@ return flag;
 }
 
 
-/// Get all method
+/// Get all user method
 public async Task<List<ShopUser>> GetAsync(){
     return ShopUsers;
 }
 
-/// get one method
+/// get one user by id method
 public async Task<List<ShopUser>> GetAsync( int Id){
 
     List<ShopUser> List1 = new List<ShopUser>();
     List1.Add(ShopUsers.Find(x => x.Id == Id));
     return List1;
 }
-/// Update method
+/// Update a user info by id method
 public async Task<bool> UpdateAsync (int Id, ShopUser UpdatedShopUser){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -73,7 +73,7 @@ public async Task<bool> UpdateAsync (int Id, ShopUser UpdatedShopUser){
 
 
 
-/// Detele method
+/// Detele a user by id method
 public async Task<bool> DeleteAsync(int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -86,7 +86,7 @@ public async Task<bool> DeleteAsync(int Id){
 
 }
 
-/// AddItemtobag method
+/// Add Item to shopping bag method
 public async Task<bool> AddItemAsync (int Id , int itemId){
     bool result = false;
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
