@@ -17,7 +17,6 @@ public class TodoController : ControllerBase {
     }
 
 //recieve all data!
-
 [HttpGet]
 public async Task<List<Todo>> Get(){
     return await _todoService.GetAsync();
@@ -53,8 +52,7 @@ public async Task<ActionResult> Update(string Id, Todo updatedTodo){
 
     bool updated = await _todoService.UpdateAsync(Id,updatedTodo);
     if (!updated){
-        // object not found is the only reaon for this return we can change it in future :>
-        return NotFound();
+    return NotFound();
     }
     return NoContent();
 }

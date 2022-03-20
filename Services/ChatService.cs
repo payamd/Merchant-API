@@ -36,7 +36,7 @@ public async Task<List<Chat>> GetAsync(){
     return Chats;
 }
 
-/// get one method
+/// Get one method
 public async Task<Chat> GetAsync( int Id){
 
     return Chats.Find(x => x.Id == Id);

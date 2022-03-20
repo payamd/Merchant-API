@@ -40,6 +40,7 @@ public class ShopItemService{
 public async Task CreateAsynce (ShopItem newShopItem){
     ShopItems.Add(newShopItem);
 }
+
 /// Create item by value keys Method
 public async Task CreatebykeysAsynce (string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
     int Id = ShopItems.Count();
@@ -55,11 +56,12 @@ public async Task<List<ShopItem>> GetAsync(){
     return ShopItems;
 }
 
-/// get one shop item by id method
+/// Get one shop item by id method
 public async Task<ShopItem> GetAsync( int Id){
 
     return ShopItems.Find(x => x.Id == Id);
 }
+
 /// Update shop item method
 public async Task<bool> UpdateAsync (int Id, ShopItem UpdatedShopItem){
     bool result = false;
@@ -87,7 +89,8 @@ public async Task<bool> DeleteAsync(int Id){
     return result;
 
 }
-// change cathegory from old name to new name by value keys
+
+// Change category from old name to new name by value keys
 public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
     bool result = false;
     foreach(var item in ShopItems){
@@ -100,7 +103,7 @@ public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
 
 }
 
-// delete category by the name of the choosen category
+// Delete category by the name of the choosen category
 
 public async Task<bool> DeleteCategoryAsync (string cat){
     bool result = false;
@@ -113,7 +116,8 @@ public async Task<bool> DeleteCategoryAsync (string cat){
     return result;
 
 }
-// delete all uncategorize item from the shop
+
+// Delete all uncategorize item from the shop
 
 public async Task<bool> DeleteUncategorizedAsync (){
     bool result = false;

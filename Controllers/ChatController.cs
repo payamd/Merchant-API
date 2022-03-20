@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Merchant_API.services;
 using Merchant_API.models;
 
-/// this is the chat API
+/// This is the chat API
 [ApiController]
 /*[Route("api/[controller]")]*/
 //[Route("/")]
@@ -15,13 +15,13 @@ public class ChatController : ControllerBase {
         this._ChatService = ChatService;
     }
 
-// get all chats
+// Get all chats
 [HttpGet]
 public async Task<List<Chat>> Get(){
     return await _ChatService.GetAsync();
 }
 
-// get chat by id
+// Get chat by id
 [HttpGet("{id}")]
 public async Task<ActionResult<Chat>> Get(int Id){
     var Chat = await _ChatService.GetAsync(Id);
@@ -30,7 +30,7 @@ public async Task<ActionResult<Chat>> Get(int Id){
     }
     return Chat;
 }
-// post a chat by Json 
+// Post a chat by Json 
 [HttpPost("Json")]
 public async Task<ActionResult> Post(Chat newChat){
     await _ChatService.CreateAsynce(newChat);
@@ -38,7 +38,7 @@ public async Task<ActionResult> Post(Chat newChat){
 
 }
 
-// post a chat by value: name and content
+// Post a chat by value: name and content
 [HttpPost]
 public async Task<ActionResult> Post(string Name, string Content){
     await _ChatService.CreatewithkeysAsynce(Name, Content);
@@ -46,7 +46,7 @@ public async Task<ActionResult> Post(string Name, string Content){
 
 }
 
-// delete a chat by id
+// Delete a chat by id
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (int Id){
     var ShopUser = await _ChatService.GetAsync(Id);

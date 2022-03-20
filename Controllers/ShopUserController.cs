@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Merchant_API.services;
 using Merchant_API.models;
 
+//Shop user api controller
+
 [ApiController]
 /*[Route("api/[controller]")]*/
 //[Route("/")]
@@ -15,14 +17,14 @@ public class ShopUserController : ControllerBase {
     }
 
 
-
+// Get all shop users
 [HttpGet]
 public async Task<List<ShopUser>> Get(){
     return await _ShopUserService.GetAsync();
 }
 
 
-
+// Get shop user by id
 [HttpGet("{id}")]
 public async Task<ActionResult<List<ShopUser>>> Get(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -33,6 +35,7 @@ public async Task<ActionResult<List<ShopUser>>> Get(int Id){
 }
 
 
+// Create a new shop user
 [HttpPost]
 public async Task<ActionResult> Post(ShopUser newShopUser){
     await _ShopUserService.CreateAsynce(newShopUser);
@@ -40,7 +43,7 @@ public async Task<ActionResult> Post(ShopUser newShopUser){
 
 }
 
-
+// Create a new shop user by values
 [HttpPost("Createbykeys")]
 public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
@@ -63,6 +66,7 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
 
 }
 
+// Update a shop user by id
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(int Id, ShopUser updatedShopUser){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
@@ -74,13 +78,13 @@ public async Task<ActionResult> Update(int Id, ShopUser updatedShopUser){
 
     bool updated = await _ShopUserService.UpdateAsync(Id,updatedShopUser);
     if (!updated){
-        // object not found is the only reaon for this return we can change it in future :>
+        // Object not found is the only reaon for this return we can change it in future :>
         return NotFound();
     }
     return Ok("Status: Ok");
 }
 
-
+// Delete a shop user by id
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (int Id){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
@@ -93,7 +97,7 @@ public async Task<ActionResult> Delete (int Id){
     return Ok("Status: Ok");
 }
 
-//add item
+//Add item to shopping bag
 [HttpPost("Add{id}")]
 public async Task<ActionResult> AddItem(int Id, int itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -102,14 +106,14 @@ public async Task<ActionResult> AddItem(int Id, int itemId){
     }
     bool updated = await _ShopUserService.AddItemAsync(Id,itemId);
     if (!updated){
-        // this is a good place to add some new code
+        // This is a good place to add some new code
         return NotFound();
     }
     return Ok("Status: Ok");
 }
 
 
-//remove item
+//Remove item from shopping bag
 [HttpPost("Remove{id}")]
 public async Task<ActionResult> RemoveItem(int Id, int itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -118,14 +122,14 @@ public async Task<ActionResult> RemoveItem(int Id, int itemId){
     }
     bool updated = await _ShopUserService.RemoveItemAsync(Id,itemId);
     if (!updated){
-        // this is a good place to add some new code
+        // if not found
         return NotFound();
     }
     return Ok("Status: Ok");
 }
 
 
-//remove All item
+//Remove All items from a user shopping bag
 [HttpPost("RAll{id}")]
 public async Task<ActionResult> RemoveAllItem(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -134,14 +138,14 @@ public async Task<ActionResult> RemoveAllItem(int Id){
     }
     bool updated = await _ShopUserService.RemoveAllItemAsync(Id);
     if (!updated){
-        // this is a good place to add some new code
+        // If not found
         return NotFound();
     }
     return Ok("Status: Ok");
 }
 
 
-//Invoice
+//Printing Invoice
 [HttpPost("Invoice{id}")]
 public async Task<ActionResult> Invoice(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -150,14 +154,14 @@ public async Task<ActionResult> Invoice(int Id){
     }
     var updated = await _ShopUserService.InvoiceAsync(Id);
     if (updated.Count == 0){
-        // this is a good place to add some new code
+        // if there is no item in the bag
         return NotFound("there is no Item in your bag!");
     }
     return Ok(updated);
 }
 
 
-//CheckOut
+//CheckOut user by id
 [HttpPost("CheckOut{id}")]
 public async Task<ActionResult> CheckOut(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -166,14 +170,14 @@ public async Task<ActionResult> CheckOut(int Id){
     }
     var updated = await _ShopUserService.CheckOutAsync(Id);
     if (updated == 0){
-        // this is a good place to add some new code
+        // if there is no item in the bag
         return NotFound("there is no Item in your bag!");
     }
     return Ok("Status: Ok - total price  = " + updated);
 }
 
 
-//remove All orderHistory
+//Remove All item from order history for a user
 [HttpPost("RAO{id}")]
 public async Task<ActionResult> RemoveAllOrderHistory(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -182,19 +186,18 @@ public async Task<ActionResult> RemoveAllOrderHistory(int Id){
     }
     bool updated = await _ShopUserService.RemoveAllOrderHistoryAsync(Id);
     if (!updated){
-        // this is a good place to add some new code
+        // If there is nothing to remove
         return NotFound();
     }
     return Ok("Status: Ok");
 }
 
 
-//loggin 
+//Login a user to the site
 [HttpPost("login")]
 public async Task<ActionResult> Login(string Email, string Password){
     //var ShopUsers = await _ShopUserService.getAllUsersAsync();
 
-    //foreach user in ShopUsers{}
     var Id=-1; 
 
     var ShopUsers = await _ShopUserService.GetAsync();
@@ -212,7 +215,7 @@ public async Task<ActionResult> Login(string Email, string Password){
     if (Id!=-1){
                 bool updated = await _ShopUserService.LoginAsync(Id, Email, Password);
                  if (!updated){
-                     // this is a good place to add some new code
+                     // If we don't have a user in the database or the password is wrong
                      return NotFound("we dont have that user in the database or your password is wrong");
                               }
                      return Ok(Id);}
@@ -221,7 +224,7 @@ public async Task<ActionResult> Login(string Email, string Password){
 
 }
 
-//loggout
+//Log out a user from the site by id
 [HttpPost("logout{id}")]
 public async Task<ActionResult> Loginout(int Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
@@ -230,7 +233,6 @@ public async Task<ActionResult> Loginout(int Id){
     }
     bool updated = await _ShopUserService.LogoutAsync(Id);
     if (!updated){
-        // this is a good place to add some new code
         return NotFound();
     }
     return Ok("Status: Ok");

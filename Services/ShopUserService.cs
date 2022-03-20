@@ -26,13 +26,13 @@ public async Task CreateAsynce (ShopUser newShopUser){
 public async Task<bool> CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
     bool flag = true;
-/// check if the email exist
+/// Check if the email exist
     foreach(var user in ShopUsers){
         if (user.Email == Email){
             flag = false;
         }
     }
-/// find the id
+/// Find the id
     int Id = ShopUsers.Count();
  if (flag == true){
     Id = Id+1;
@@ -50,7 +50,7 @@ public async Task<List<ShopUser>> GetAsync(){
     return ShopUsers;
 }
 
-/// get one user by id method
+/// Get one user by id method
 public async Task<List<ShopUser>> GetAsync( int Id){
 
     List<ShopUser> List1 = new List<ShopUser>();
@@ -92,7 +92,7 @@ public async Task<bool> AddItemAsync (int Id , int itemId){
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x=> x.Id == itemId);
     if (userindex != -1 && itemindex != -1){
-//        UpdatedShopUser.Id = Id;
+//        Add item to the list
         ShopUsers[userindex].ShoppingBag.Add(Merchant_API.services.ShopItemService.ShopItems[itemindex]);
         result=true;
     }
@@ -102,7 +102,7 @@ public async Task<bool> AddItemAsync (int Id , int itemId){
 }
 
 
-/// remove Item from shopping bag by id method
+/// Remove Item from shopping bag by id method
 public async Task<bool> RemoveItemAsync(int Id , int itemId){
     bool result = false;
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -123,12 +123,12 @@ public async Task<bool> RemoveItemAsync(int Id , int itemId){
 }
 
 
-/// remove All Item from shopping bag method
+/// Remove All Item from shopping bag method
 public async Task<bool> RemoveAllItemAsync (int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
-//        UpdatedShopUser.Id = Id;
+//        Remove all item from shopping bag;
         ShopUsers[index].ShoppingBag.Clear();
         result=true;
         }
@@ -137,7 +137,7 @@ public async Task<bool> RemoveAllItemAsync (int Id){
 
 }
 
-/// login to the site method
+/// Login to the site method
 public async Task<bool> LoginAsync (int Id , string Email, string Password){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -150,7 +150,7 @@ public async Task<bool> LoginAsync (int Id , string Email, string Password){
 
 }
 
-/// logout from the site method
+/// Logout from the site method
 public async Task<bool> LogoutAsync (int Id){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
@@ -162,12 +162,12 @@ public async Task<bool> LogoutAsync (int Id){
 }
 
 
-/// printing invoice method
+/// Printing invoice method
 public async Task<List<ShopItem>> InvoiceAsync (int Id){
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     List<ShopItem> Invoiceitems = new List<ShopItem>();
     if (userindex != -1){
-//        UpdatedShopUser.Id = Id;
+//        Add item to invoice;
     foreach (var item in ShopUsers[userindex].ShoppingBag)
     {
         Invoiceitems.Add(item);
@@ -184,14 +184,14 @@ public async Task<int> CheckOutAsync (int Id){
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     List<ShopItem> checkoutitems = new List<ShopItem>();
     if (userindex != -1){
-//        UpdatedShopUser.Id = Id;
+//        Add items to checkout list;
     foreach (var item in ShopUsers[userindex].ShoppingBag)
     {
         sum += Int32.Parse(item.Price.TrimStart( new Char[] { ' ', '$' } ));
         checkoutitems.Add(item);
     }
         var time = DateTime.Now.ToString();
-        //ShopUsers[userindex].OrderHistory.Add(Tuple.Create(checkoutitems,time));
+        //Add item to order list and clear the bag
         ShopUsers[userindex].OrderHistory.Add(checkoutitems);
         ShopUsers[userindex].ShoppingBag.Clear();
     }
@@ -201,13 +201,13 @@ public async Task<int> CheckOutAsync (int Id){
 }
 
 
-/// remove All item from OrderHistory method, if user need that
+/// Remove All item from OrderHistory method, if user need that
 public async Task<bool> RemoveAllOrderHistoryAsync (int Id){
     bool result = false;
 
     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     if (userindex != -1){
-//        UpdatedShopUser.Id = Id;
+//        Clear all
         ShopUsers[userindex].OrderHistory.Clear();
         result=true;
     }
