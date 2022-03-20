@@ -14,8 +14,8 @@ public class ShopUserService{
 
 ///Default Values
     private List<ShopUser> ShopUsers = new List<ShopUser> () {
-        new ShopUser(1, "username1", "Profile Picture1","Phone Number1","Email1","Address1","Zipcode", "Password",true, false),
-        new ShopUser(2, "username2", "Profile Picture2","Phone Number2","Email2","Address2","Zipcode", "Password",false, false)
+        new ShopUser(1, "Client", "Profile Picture1","1234567","client@gmail.com","Ottawa","k2l8b1", "123",true, false),
+        new ShopUser(2, "Merchant", "Profile Picture2","1234567","merchant@gmail.com","Ottawa","k1n0a7", "123",false, false)
     };
 
 /// Create Method
@@ -142,7 +142,7 @@ public async Task<bool> LoginAsync (int Id , string Email, string Password){
     bool result = false;
     int index = ShopUsers.FindIndex(x=> x.Id == Id);
     if (index != -1){
-        if( ShopUsers[index].IsLoggedIn == false && ShopUsers[index].Email == Email && ShopUsers[index].Password == Password ){
+        if( ShopUsers[index].IsLoggedIn == false && ShopUsers[index].Email.ToLower() == Email.ToLower() && ShopUsers[index].Password == Password ){
         ShopUsers[index].IsLoggedIn = true;
         result=true;}
         }
