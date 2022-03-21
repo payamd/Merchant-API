@@ -103,7 +103,7 @@ public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
 
 }
 
-// Delete category by the name of the choosen category
+// Delete category by the name of the chosen category
 
 public async Task<bool> DeleteCategoryAsync (string cat){
     bool result = false;
@@ -118,7 +118,7 @@ public async Task<bool> DeleteCategoryAsync (string cat){
 
 }
 
-// Delete all uncategorize item from the shop
+// Delete all uncategorized items from the shop
 
 public async Task<bool> DeleteUncategorizedAsync (){
     bool result = false;

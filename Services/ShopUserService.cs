@@ -14,8 +14,9 @@ public class ShopUserService{
 
 ///Default Values
     private List<ShopUser> ShopUsers = new List<ShopUser> () {
-        new ShopUser(1, "Client", "Profile Picture1","1234567","client@gmail.com","Ottawa","k2l8b1", "123",true, false),
-        new ShopUser(2, "Merchant", "Profile Picture2","1234567","merchant@gmail.com","Ottawa","k1n0a7", "123",false, false)
+        new ShopUser(1, "Merchant", "Profile Picture2","1234567","merchant@gmail.com","Ottawa","k1n0a7", "123",false, false),
+        new ShopUser(2, "Client", "Profile Picture1","1234567","client@gmail.com","Ottawa","k2l8b1", "123",true, false)
+        
     };
 
 /// Create Method
