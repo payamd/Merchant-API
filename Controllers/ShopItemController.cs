@@ -93,7 +93,7 @@ public async Task<ActionResult> ChangeCategory (string oldcat, string newcat){
     
 }
 
-// Delete a category
+/// Delete a category
 [HttpPost("DeleteCategory")]
 public async Task<ActionResult> DeleteCategory (string cat){
     var ShopItem = await _ShopItemService.DeleteCategoryAsync(cat);
