@@ -53,7 +53,7 @@ public async Task<ActionResult> Delete (string Id){
     if (ShopUser is null) {
         return NotFound();
     }
-    await _ChatService.DeleteAsync(Id);
+    await _ChatService.DeleteAsync(ShopUser.Id);
 
     return Ok("Status: Ok");
 }
