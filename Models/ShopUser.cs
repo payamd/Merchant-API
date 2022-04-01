@@ -1,7 +1,12 @@
 namespace Merchant_API.models;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 
 public class ShopUser{
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
     public string Name { get; set; }
     public string ProfilePicture { get; set; }
     public string PhoneNumber { get; set; }
@@ -15,7 +20,7 @@ public class ShopUser{
     public List<List<ShopItem>> OrderHistory { get; set; }
     // public List<Tuple<List<ShopItem>,string>> OrderHistory { get; set; }
 
-    public ShopUser (int Id, string Name,string ProfilePicture, string PhoneNumber,
+    public ShopUser (string Id, string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer, bool IsLoggedIn)
     {
         this.Id = Id;

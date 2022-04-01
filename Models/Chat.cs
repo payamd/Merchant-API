@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 public class Chat{
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
+    public string? Id { get; set; }
      public string Name { get; set; }
     public string Content { get; set; }
     public string Date { get; set; }

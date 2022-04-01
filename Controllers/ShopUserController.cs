@@ -26,7 +26,7 @@ public async Task<List<ShopUser>> Get(){
 
 // Get shop user by id
 [HttpGet("{id}")]
-public async Task<ActionResult<List<ShopUser>>> Get(int Id){
+public async Task<ActionResult<List<ShopUser>>> Get(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -47,7 +47,7 @@ public async Task<ActionResult> Post(ShopUser newShopUser){
 [HttpPost("Createbykeys")]
 public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
-    var Id=-1; 
+    string Id="-1"; 
     var ShopUsers = await _ShopUserService.GetAsync();
     var result = await _ShopUserService.CreatebykeysAsynce(Name, ProfilePicture, PhoneNumber,
     Email, Address, Zipcode, Password, IsBuyer);
@@ -68,7 +68,7 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
 
 // Update a shop user by id
 [HttpPut("{id}")]
-public async Task<ActionResult> Update(int Id, ShopUser updatedShopUser){
+public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
     var ShopUser=ShopUser1.First();
     if (ShopUser is null) {
@@ -86,7 +86,7 @@ public async Task<ActionResult> Update(int Id, ShopUser updatedShopUser){
 
 // Delete a shop user by id
 [HttpDelete("{id}")]
-public async Task<ActionResult> Delete (int Id){
+public async Task<ActionResult> Delete (string Id){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
     var ShopUser=ShopUser1.First();
     if (ShopUser is null) {
@@ -99,7 +99,7 @@ public async Task<ActionResult> Delete (int Id){
 
 //Add item to shopping bag
 [HttpPost("Add{id}")]
-public async Task<ActionResult> AddItem(int Id, int itemId){
+public async Task<ActionResult> AddItem(string Id, string itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -115,7 +115,7 @@ public async Task<ActionResult> AddItem(int Id, int itemId){
 
 //Remove item from shopping bag
 [HttpPost("Remove{id}")]
-public async Task<ActionResult> RemoveItem(int Id, int itemId){
+public async Task<ActionResult> RemoveItem(string Id, string itemId){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -131,7 +131,7 @@ public async Task<ActionResult> RemoveItem(int Id, int itemId){
 
 //Remove All items from a user shopping bag
 [HttpPost("RAll{id}")]
-public async Task<ActionResult> RemoveAllItem(int Id){
+public async Task<ActionResult> RemoveAllItem(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -147,7 +147,7 @@ public async Task<ActionResult> RemoveAllItem(int Id){
 
 //Printing Invoice
 [HttpPost("Invoice{id}")]
-public async Task<ActionResult> Invoice(int Id){
+public async Task<ActionResult> Invoice(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -163,7 +163,7 @@ public async Task<ActionResult> Invoice(int Id){
 
 //CheckOut user by id
 [HttpPost("CheckOut{id}")]
-public async Task<ActionResult> CheckOut(int Id){
+public async Task<ActionResult> CheckOut(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -179,7 +179,7 @@ public async Task<ActionResult> CheckOut(int Id){
 
 //Remove All item from order history for a user
 [HttpPost("RAO{id}")]
-public async Task<ActionResult> RemoveAllOrderHistory(int Id){
+public async Task<ActionResult> RemoveAllOrderHistory(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -198,7 +198,7 @@ public async Task<ActionResult> RemoveAllOrderHistory(int Id){
 public async Task<ActionResult> Login(string Email, string Password){
     //var ShopUsers = await _ShopUserService.getAllUsersAsync();
 
-    var Id=-1; 
+    string Id="-1"; 
 
     var ShopUsers = await _ShopUserService.GetAsync();
     if (ShopUsers is null) {
@@ -212,7 +212,7 @@ public async Task<ActionResult> Login(string Email, string Password){
             
         }
     }
-    if (Id!=-1){
+    if (Id!="-1"){
                 int updated = await _ShopUserService.LoginAsync(Id, Email, Password);
                  if (updated == 0){
                      // If we don't have a user in the database or the password is wrong
@@ -229,7 +229,7 @@ public async Task<ActionResult> Login(string Email, string Password){
 
 //Log out a user from the site by id
 [HttpPost("logout{id}")]
-public async Task<ActionResult> Loginout(int Id){
+public async Task<ActionResult> Loginout(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();

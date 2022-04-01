@@ -26,7 +26,7 @@ public async Task<List<ShopItem>> Get(){
 
 // Get the shop item by id
 [HttpGet("{id}")]
-public async Task<ActionResult<ShopItem>> Get(int Id){
+public async Task<ActionResult<ShopItem>> Get(string Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     if (ShopItem is null) {
         return NotFound();
@@ -52,7 +52,7 @@ public async Task<ActionResult> Createbykeys(string Name, string ShortDescriptio
 
 // Update a shop item by id
 [HttpPut("{id}")]
-public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
+public async Task<ActionResult> Update(string Id, ShopItem updatedShopItem){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     //Check if it is null
     if (ShopItem is null) {
@@ -70,7 +70,7 @@ public async Task<ActionResult> Update(int Id, ShopItem updatedShopItem){
 
 // Delete a shop item by id
 [HttpDelete("{id}")]
-public async Task<ActionResult> Delete (int Id){
+public async Task<ActionResult> Delete (string Id){
     var ShopItem = await _ShopItemService.GetAsync(Id);
     if (ShopItem is null) {
         return NotFound();
