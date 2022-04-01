@@ -1,14 +1,21 @@
 using Merchant_API.models;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 namespace Merchant_API.services;
 
 public class ShopUserService{
 
+        private readonly IMongoCollection<ShopUser> _UserCollection;
     /// ctor
-    public ShopUserService()
+    public ShopUserService(IOptions<MongoDBSettings> mongoDBSettings)
     {
-     
-        
+        var settings = MongoClientSettings.FromConnectionString(mongoDBSettings.Value.ConnectionString);
+        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+        var client = new MongoClient(settings);
+        var database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
+        _UserCollection = database.GetCollection<ShopUser>(mongoDBSettings.Value.UserCollectionName);
     }
 
 
