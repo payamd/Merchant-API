@@ -8,5 +8,7 @@ public class MongoDBSettings{
         public string? ConnectionString { get; set; }
         public string? DatabaseName { get; set; }
         public string? ShopCollectionName { get; set; }
+        public string? ChatCollectionName { get; set; }
+
 
 }

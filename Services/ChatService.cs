@@ -1,12 +1,21 @@
-using Merchant_API.models;
-
 namespace Merchant_API.services;
+using Merchant_API.models;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using MongoDB.Bson;
 
 public class ChatService{
 
+    private readonly IMongoCollection<Chat> _chatCollection;
     /// ctor
-    public ChatService()
+    public ChatService(IOptions<MongoDBSettings> mongoDBSettings)
     {
+        var settings = MongoClientSettings.FromConnectionString(mongoDBSettings.Value.ConnectionString);
+        settings.ServerApi = new ServerApi(ServerApiVersion.V1);
+        var client = new MongoClient(settings);
+        var database = client.GetDatabase(mongoDBSettings.Value.DatabaseName);
+        _chatCollection = database.GetCollection<Chat>(mongoDBSettings.Value.ChatCollectionName);
+    
         
     }
 
@@ -16,6 +25,18 @@ public class ChatService{
         new Chat(1,"user1", "I have a question!", "2022"),
         new Chat(2, "user2", "I have a question!", "2021")
     };
+
+
+/// Get all method
+public async Task<List<Chat>> GetAsync(){
+    return Chats;
+}
+
+/// Get one method
+public async Task<Chat> GetAsync( int Id){
+
+    return Chats.Find(x => x.Id == Id);
+}
 
 /// Create Method with Json
 public async Task CreateAsynce (Chat newChat){
@@ -31,16 +52,7 @@ public async Task CreatewithkeysAsynce (string Name,string Content){
     Chats.Add(newmessage);
 }
 
-/// Get all method
-public async Task<List<Chat>> GetAsync(){
-    return Chats;
-}
 
-/// Get one method
-public async Task<Chat> GetAsync( int Id){
-
-    return Chats.Find(x => x.Id == Id);
-}
 
 /// Detele method
 public async Task<bool> DeleteAsync(int Id){
