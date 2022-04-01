@@ -14,6 +14,6 @@ public class Shop{
 
     [BsonElement("items")]
     [JsonPropertyName("items")]
-    public List<string> MovieId {get; set;} = null!;
+    public List<string> items {get; set;} = null!;
 
 }

@@ -6,8 +6,19 @@ var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
-builder.Services.AddSingleton<MongoDBService>();
+//builder.Services.Configure<MongoDBSettings>(builder.Configuration.GetSection("MongoDB"));
+
+builder.Services.Configure<MongoDBSettings>(
+                builder.Configuration.GetSection(nameof(MongoDBSettings)));
+
+// Add our services for DI
+MongoDBSettings options = builder.Configuration.GetSection(nameof(MongoDBSettings)).Get<MongoDBSettings>();
+// override connection string from environment variables, you can also do the same for the rest
+string connection_string = builder.Configuration.GetValue<string>("CONNECTION_STRING");
+if (!string.IsNullOrEmpty(connection_string)) {
+    options.ConnectionString = connection_string;
+}
+
 
 builder.Services.AddCors(options =>
 {
@@ -31,6 +42,8 @@ builder.Services.AddSingleton<TodoService>();
 builder.Services.AddSingleton<ShopItemService>();
 builder.Services.AddSingleton<ShopUserService>();
 builder.Services.AddSingleton<ChatService>();
+builder.Services.AddSingleton<ShopService>();
+
 
 
 var app = builder.Build();
