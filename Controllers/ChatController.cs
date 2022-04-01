@@ -23,7 +23,7 @@ public async Task<List<Chat>> Get(){
 
 // Get chat by id
 [HttpGet("{id}")]
-public async Task<ActionResult<Chat>> Get(int Id){
+public async Task<ActionResult<Chat>> Get(string Id){
     var Chat = await _ChatService.GetAsync(Id);
     if (Chat is null) {
         return NotFound();
@@ -48,7 +48,7 @@ public async Task<ActionResult> Post(string Name, string Content){
 
 // Delete a chat by id
 [HttpDelete("{id}")]
-public async Task<ActionResult> Delete (int Id){
+public async Task<ActionResult> Delete (string Id){
     var ShopUser = await _ChatService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();

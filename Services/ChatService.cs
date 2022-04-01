@@ -21,49 +21,59 @@ public class ChatService{
 
 
 ///Default Values
-    private List<Chat> Chats = new List<Chat> () {
-        new Chat(1,"user1", "I have a question!", "2022"),
-        new Chat(2, "user2", "I have a question!", "2021")
-    };
+    // private List<Chat> Chats = new List<Chat> () {
+    //     new Chat("1","user1", "I have a question!", "2022"),
+    //     new Chat("2", "user2", "I have a question!", "2021")
+    // };
 
 
 /// Get all method
 public async Task<List<Chat>> GetAsync(){
-    return Chats;
+        return await _chatCollection.Find(_ => true).ToListAsync();
 }
 
 /// Get one method
-public async Task<Chat> GetAsync( int Id){
+public async Task<Chat> GetAsync( string Id){
 
-    return Chats.Find(x => x.Id == Id);
+        return await _chatCollection.Find<Chat>(chat => chat.Id == Id).FirstOrDefaultAsync();
+
 }
 
 /// Create Method with Json
 public async Task CreateAsynce (Chat newChat){
-   Chats.Add(newChat);
+        newChat.Id = null; // will be set by Mongo
+        await _chatCollection.InsertOneAsync(newChat);
 }
 
 
 /// Create Method with keys
 public async Task CreatewithkeysAsynce (string Name,string Content){
-    int id = Chats.Count();
-    id = id+1;
-    Chat newmessage = new Chat(id,Name,Content);
-    Chats.Add(newmessage);
+    //int id = Chats.Count();
+    //id = id+1;
+     Chat newmessage=  new Chat();
+     newmessage.Id = null;
+     newmessage.Name= Name;
+     newmessage.Content=Content;
+     newmessage.Date = DateTime.Now.ToString();
+    //Chats.Add(newmessage);
+    await _chatCollection.InsertOneAsync(newmessage);
 }
 
 
 
 /// Detele method
-public async Task<bool> DeleteAsync(int Id){
-    bool result = false;
-    int index = Chats.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-        Chats.RemoveAt(index);
-        result=true;
-    }
+public async Task<bool> DeleteAsync(string Id){
+        DeleteResult r = await _chatCollection.DeleteOneAsync(chat => chat.Id == Id);
+        return r.DeletedCount == 1;
+    // bool result = false;
+    // int index = Chats.FindIndex(x=> x.Id == Id);
+    // if (index != -1){
+    //     DeleteResult r = await _chatCollection.DeleteOneAsync(chat => chat.Id == Id);
+    //     result=true;
+    //     return r.DeletedCount == 1;
+    // }
 
-    return result;
+    // return result;
 
 }
 

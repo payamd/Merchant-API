@@ -1,7 +1,11 @@
 namespace Merchant_API.models;
-
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System.Text.Json.Serialization;
 public class Chat{
-    public int Id { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
      public string Name { get; set; }
     public string Content { get; set; }
     public string Date { get; set; }
@@ -9,7 +13,7 @@ public class Chat{
     public Chat(){
         
     }
-        public Chat (int Id,string Name,string Content)
+        public Chat (string Id,string Name,string Content)
         : this()
     {
         this.Id = Id;
@@ -20,7 +24,7 @@ public class Chat{
        // this.ChatContent = new List<ChatText>()  
     }
 
-    public Chat (int Id,string Name,string Content, string Date)
+    public Chat (string Id,string Name,string Content, string Date)
     : this()
     {
         this.Id = Id;
