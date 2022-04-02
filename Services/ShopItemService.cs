@@ -52,101 +52,127 @@ public async Task CreateAsynce (ShopItem newShopItem){
 
 /// Create item by value keys Method
 public async Task CreatebykeysAsynce (string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
-    int Id = ShopItems.Count();
-    Id = Id+1;
-    ShopItem newShopItem = new ShopItem (Id.ToString(), Name, ShortDescription, Description, Picture, Price, Option, Category, Quantity);
-    ShopItems.Add(newShopItem);
+    //int Id = ShopItems.Count();
+    //Id = Id+1;
+    string Id = null;
+    ShopItem newShopItem = new ShopItem (Id, Name, ShortDescription, Description, Picture, Price, Option, Category, Quantity);
+    await _ItemCollection.InsertOneAsync(newShopItem);
+    //ShopItems.Add(newShopItem);
 
     }
 
 
 /// Get all shop items method
 public async Task<List<ShopItem>> GetAsync(){
-    return ShopItems;
+     return await _ItemCollection.Find(_ => true).ToListAsync();
+    //return ShopItems;
 }
 
 /// Get one shop item by id method
 public async Task<ShopItem> GetAsync( string Id){
-
-    return ShopItems.Find(x => x.Id == Id);
+    return await _ItemCollection.Find<ShopItem>(chat => chat.Id == Id).FirstOrDefaultAsync();
+    //return ShopItems.Find(x => x.Id == Id);
 }
 
 /// Update shop item method
 public async Task<bool> UpdateAsync (string Id, ShopItem UpdatedShopItem){
-    bool result = false;
-    int index = ShopItems.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-        UpdatedShopItem.Id = Id;
-        ShopItems[index]= UpdatedShopItem;
-        result=true;
-    }
+    // bool result = false;
+    // int index = ShopItems.FindIndex(x=> x.Id == Id);
+    // if (index != -1){
+    //     UpdatedShopItem.Id = Id;
+    //     ShopItems[index]= UpdatedShopItem;
+    //     result=true;
+    // }
 
-    return result;
+    // return result;
+    ReplaceOneResult r = await _ItemCollection.ReplaceOneAsync(item => item.Id == Id, UpdatedShopItem);
+    return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
 
 }
 
 
 /// Detele shop item by id method
 public async Task<bool> DeleteAsync(string Id){
-    bool result = false;
-    int index = ShopItems.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-        ShopItems.RemoveAt(index);
-        result=true;
-    }
+    // bool result = false;
+    // int index = ShopItems.FindIndex(x=> x.Id == Id);
+    // if (index != -1){
+    //     ShopItems.RemoveAt(index);
+    //     result=true;
+    // }
 
-    return result;
+    // return result;
+    DeleteResult r = await _ItemCollection.DeleteOneAsync(item => item.Id == Id);
+    return r.DeletedCount == 1;
 
 }
 
 // Change category from old name to new name by value keys
 public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
-    bool result = false;
-    foreach(var item in ShopItems){
-        if(item.Category.ToLower() == oldcat.ToLower()){
-        item.Category=newcat;
-        result=true;}
-    }
+    
+   // UpdateResult r = await _ItemCollection.UpdateManyAsync<ShopItem>(item => item.Category.ToLower() == oldcat.ToLower(),);
+        FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, oldcat);
+        UpdateDefinition<ShopItem> update = Builders<ShopItem>.Update.Set(p => p.Category, newcat);
+        UpdateResult r = await _ItemCollection.UpdateManyAsync(filter, update);
+        return r.IsModifiedCountAvailable && r.ModifiedCount >= 1;
 
-    return result;
+    // bool result = false;
+    
+    // foreach(var item in ShopItems){
+    //     if(item.Category.ToLower() == oldcat.ToLower()){
+    //     item.Category=newcat;
+    //     result=true;}
+    // }
+
+    // return result;
 
 }
 
 // Delete category by the name of the chosen category
 
 public async Task<bool> DeleteCategoryAsync (string cat){
-    bool result = false;
-    foreach(var item in ShopItems){
-        if(item.Category.ToLower() == cat.ToLower()){
-        item.Category="Uncategorized";
-        result=true;
-        }
-    }
+    //UpdateResult r = await _ItemCollection.UpdateManyAsync<ShopItem>(item => item.Category.ToLower() == cat.ToLower(), "Uncategorized");
+   // return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
+        FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, cat);
+        UpdateDefinition<ShopItem> update = Builders<ShopItem>.Update.Set(p => p.Category, "Uncategorized");
+        UpdateResult r = await _ItemCollection.UpdateManyAsync(filter, update);
+        return r.IsModifiedCountAvailable && r.ModifiedCount >= 1;
+        
+    // bool result = false;
+    // foreach(var item in ShopItems){
+    //     if(item.Category.ToLower() == cat.ToLower()){
+    //     item.Category="Uncategorized";
+    //     result=true;
+    //     }
+    // }
 
-    return result;
+    // return result;
 
 }
 
 // Delete all uncategorized items from the shop
 
 public async Task<bool> DeleteUncategorizedAsync (){
-    bool result = false;
-    bool flag=false;
-    List<ShopItem> list1 = new List<ShopItem>();
-    string s1= "Uncategorized";
-    foreach(var item in ShopItems){
-        if(item.Category.ToLower() == s1.ToLower()){
-        list1.Add(item);
-        flag=true;
-        }
-    }
-    if(flag==true){
-        ShopItems.RemoveAll(x => list1.Contains(x));
-        result = true;}
+        FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, "Uncategorized");
+        DeleteResult r = await _ItemCollection.DeleteManyAsync(filter);
+        return r.IsAcknowledged;
+        
+    // bool result = false;
+    // bool flag=false;
+    // List<ShopItem> list1 = new List<ShopItem>();
+    // string s1= "Uncategorized";
+    // foreach(var item in ShopItems){
+    //     if(item.Category.ToLower() == s1.ToLower()){
+    //     list1.Add(item);
+    //     flag=true;
+    //     }
+    // }
+    // if(flag==true){
+    //     ShopItems.RemoveAll(x => list1.Contains(x));
+    //     result = true;}
      
     
 
-    return result;
+    // return result;
 
 }
 
