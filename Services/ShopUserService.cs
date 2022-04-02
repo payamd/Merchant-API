@@ -28,25 +28,36 @@ public class ShopUserService{
 
 /// Create Method
 public async Task CreateAsynce (ShopUser newShopUser){
-    ShopUsers.Add(newShopUser);
+   // ShopUsers.Add(newShopUser);
+       newShopUser.Id = null; // will be set by Mongo
+    await _UserCollection.InsertOneAsync(newShopUser);
 }
+
+
 /// Create user by keys Method
 public async Task<bool> CreatebykeysAsynce (string Name,string ProfilePicture, string PhoneNumber,
     string Email, string Address,string Zipcode, string Password,bool IsBuyer){
     bool flag = true;
-/// Check if the email exist
-    foreach(var user in ShopUsers){
-        if (user.Email == Email){
+    var result1 = await _UserCollection.Find<ShopUser>(user => user.Email == Email).FirstOrDefaultAsync();
+       if (result1 != null){
             flag = false;
-        }
-    }
+       }
+
+/// Check if the email exist
+    // foreach(var user in ShopUsers){
+    //     if (user.Email == Email){
+    //         flag = false;
+    //     }
+    //}
 /// Find the id
-    int Id = ShopUsers.Count();
- if (flag == true){
-    Id = Id+1;
+    //int Id = ShopUsers.Count();
+
+    if (flag == true){
+    string Id = null;
     bool IsLoggedIn = false;
-    ShopUser newShopUser = new ShopUser(Id.ToString(), Name,ProfilePicture, PhoneNumber, Email, Address, Zipcode, Password, IsBuyer, IsLoggedIn);
-    ShopUsers.Add(newShopUser);
+    ShopUser newShopUser = new ShopUser(Id, Name,ProfilePicture, PhoneNumber, Email, Address, Zipcode, Password, IsBuyer, IsLoggedIn);
+    await _UserCollection.InsertOneAsync(newShopUser);
+    //ShopUsers.Add(newShopUser);
  }
 return flag;
 
@@ -55,27 +66,32 @@ return flag;
 
 /// Get all user method
 public async Task<List<ShopUser>> GetAsync(){
-    return ShopUsers;
+    //return ShopUsers;
+    return await _UserCollection.Find(_ => true).ToListAsync();
 }
 
 /// Get one user by id method
-public async Task<List<ShopUser>> GetAsync(string Id){
+public async Task<ShopUser> GetAsync(string Id){
+    return await _UserCollection.Find<ShopUser>(user => user.Id == Id).FirstOrDefaultAsync();
 
-    List<ShopUser> List1 = new List<ShopUser>();
-    List1.Add(ShopUsers.Find(x => x.Id == Id));
-    return List1;
+    // List<ShopUser> List1 = new List<ShopUser>();
+    // List1.Add(ShopUsers.Find(x => x.Id == Id));
+    // return List1;
 }
 /// Update a user info by id method
 public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
-    bool result = false;
-    int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-        UpdatedShopUser.Id = Id;
-        ShopUsers[index]= UpdatedShopUser;
-        result=true;
-    }
+    // bool result = false;
+    // int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    // if (index != -1){
+    //     UpdatedShopUser.Id = Id;
+    //     ShopUsers[index]= UpdatedShopUser;
+    //     result=true;
+    // }
 
-    return result;
+    // return result;
+
+    ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, UpdatedShopUser);
+    return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
 
 }
 
@@ -83,14 +99,17 @@ public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
 
 /// Detele a user by id method
 public async Task<bool> DeleteAsync(string Id){
-    bool result = false;
-    int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    if (index != -1){
-        ShopUsers.RemoveAt(index);
-        result=true;
-    }
+    // bool result = false;
+    // int index = ShopUsers.FindIndex(x=> x.Id == Id);
+    // if (index != -1){
+    //     ShopUsers.RemoveAt(index);
+    //     result=true;
+    // }
 
-    return result;
+    // return result;
+
+    DeleteResult r = await _UserCollection.DeleteOneAsync(user => user.Id == Id);
+    return r.DeletedCount == 1;
 
 }
 
