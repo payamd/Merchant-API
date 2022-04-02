@@ -142,23 +142,31 @@ public async Task<bool> AddItemAsync (string Id , string itemId, ShopUser curren
 
 /// Remove Item from shopping bag by id method
 public async Task<bool> RemoveItemAsync(string Id , string itemId, ShopUser currentUser){
-        bool result = false;
-        int userindex = ShopUsers.FindIndex(x => x.Id == Id);
-        int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x => (x.Id).ToString() == itemId);
-        if (userindex != -1 && itemindex != -1)
-        {
+        // bool result = false;
+        // int userindex = ShopUsers.FindIndex(x => x.Id == Id);
+        // int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x => (x.Id).ToString() == itemId);
+        // if (userindex != -1 && itemindex != -1)
+        // {
 
-            int itemindex2 = ShopUsers[userindex].ShoppingBag.FindIndex(x => (x.Id).ToString() == itemId);
+        //     int itemindex2 = ShopUsers[userindex].ShoppingBag.FindIndex(x => (x.Id).ToString() == itemId);
 
-            if (itemindex2 != -1)
-            {
-                ShopUsers[userindex].ShoppingBag.RemoveAt(itemindex2);
-                result = true;
-            }
-        }
+        //     if (itemindex2 != -1)
+        //     {
+        //         ShopUsers[userindex].ShoppingBag.RemoveAt(itemindex2);
+        //         result = true;
+        //     }
+        // }
 
 
-        return result;
+        // return result;
+    int itemindex = currentUser.ShoppingBag.FindIndex(x=> x.Id == itemId);
+    if(itemindex!= -1){
+        currentUser.ShoppingBag.RemoveAt(itemindex);
+        ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, currentUser);
+        return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
+    }
+
+    return false;
 
 }
 
