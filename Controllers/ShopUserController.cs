@@ -26,7 +26,7 @@ public async Task<List<ShopUser>> Get(){
 
 // Get shop user by id
 [HttpGet("{id}")]
-public async Task<ActionResult<List<ShopUser>>> Get(string Id){
+public async Task<ActionResult<ShopUser>> Get(string Id){
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -70,7 +70,9 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
-    var ShopUser=ShopUser1.First();
+   // var ShopUser=ShopUser1.First();
+      var ShopUser=ShopUser1;
+
     if (ShopUser is null) {
         return NotFound();
     }
@@ -88,7 +90,9 @@ public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (string Id){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
-    var ShopUser=ShopUser1.First();
+    //var ShopUser=ShopUser1.First();
+    var ShopUser=ShopUser1;
+
     if (ShopUser is null) {
         return NotFound();
     }
