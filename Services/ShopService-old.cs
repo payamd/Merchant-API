@@ -69,3 +69,12 @@ return true;
     //"ConnectionURI":"mongodb+srv://payam:P123123123@merchant.wjtth.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     //"DatabaseName":"Merchant_Mongo",
     //"CollectionName":"Shop"
+
+//       "mongoDBSettings": {
+//     "ConnectionString":"mongodb+srv://payam:P123123123@merchant.wjtth.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+//     "DatabaseName":"Merchant_Mongo",
+//     "ShopCollectionName":"Shop",
+//     "ChatCollectionName":"Chat",
+//     "ItemCollectionName":"Item",
+//     "UserCollectionName":"User"
+//   }
