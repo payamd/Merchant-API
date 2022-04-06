@@ -21,7 +21,7 @@ public async Task<List<Chat>> Get(){
     return await _ChatService.GetAsync();
 }
 
-// Get chat by id
+/// Get chat by id
 [HttpGet("{id}")]
 public async Task<ActionResult<Chat>> Get(int Id){
     var Chat = await _ChatService.GetAsync(Id);
