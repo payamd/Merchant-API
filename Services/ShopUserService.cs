@@ -7,7 +7,7 @@ namespace Merchant_API.services;
 
 public class ShopUserService{
 
-        private readonly IMongoCollection<ShopUser> _UserCollection;
+    private readonly IMongoCollection<ShopUser> _UserCollection;
     /// ctor
     public ShopUserService(IOptions<MongoDBSettings> mongoDBSettings)
     {
@@ -19,7 +19,7 @@ public class ShopUserService{
     }
 
 
-///Default Values
+/// old Default Values
     private List<ShopUser> ShopUsers = new List<ShopUser> () {
         new ShopUser("1", "Merchant", "Profile Picture2","1234567","merchant@gmail.com","Ottawa","k1n0a7", "123",false, false),
         new ShopUser("2", "Client", "Profile Picture1","1234567","client@gmail.com","Ottawa","k2l8b1", "123",true, false)
@@ -28,7 +28,6 @@ public class ShopUserService{
 
 /// Create Method
 public async Task CreateAsynce (ShopUser newShopUser){
-   // ShopUsers.Add(newShopUser);
        newShopUser.Id = null; // will be set by Mongo
     await _UserCollection.InsertOneAsync(newShopUser);
 }
@@ -49,21 +48,11 @@ public async Task<bool> CreatebykeysAsynce (string Name,string ProfilePicture, s
             flag = false;
        }
 
-/// Check if the email exist
-    // foreach(var user in ShopUsers){
-    //     if (user.Email == Email){
-    //         flag = false;
-    //     }
-    //}
-/// Find the id
-    //int Id = ShopUsers.Count();
-
     if (flag == true){
     string Id = null;
     bool IsLoggedIn = false;
     ShopUser newShopUser = new ShopUser(Id, Name,ProfilePicture, PhoneNumber, Email, Address, Zipcode, Password, IsBuyer, IsLoggedIn);
     await _UserCollection.InsertOneAsync(newShopUser);
-    //ShopUsers.Add(newShopUser);
  }
 return flag;
 
@@ -72,29 +61,15 @@ return flag;
 
 /// Get all user method
 public async Task<List<ShopUser>> GetAsync(){
-    //return ShopUsers;
     return await _UserCollection.Find(_ => true).ToListAsync();
 }
 
 /// Get one user by id method
 public async Task<ShopUser> GetAsync(string Id){
     return await _UserCollection.Find<ShopUser>(user => user.Id == Id).FirstOrDefaultAsync();
-
-    // List<ShopUser> List1 = new List<ShopUser>();
-    // List1.Add(ShopUsers.Find(x => x.Id == Id));
-    // return List1;
 }
 /// Update a user info by id method
 public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
-    // bool result = false;
-    // int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    // if (index != -1){
-    //     UpdatedShopUser.Id = Id;
-    //     ShopUsers[index]= UpdatedShopUser;
-    //     result=true;
-    // }
-
-    // return result;
 
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, UpdatedShopUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
@@ -105,14 +80,6 @@ public async Task<bool> UpdateAsync (string Id, ShopUser UpdatedShopUser){
 
 /// Detele a user by id method
 public async Task<bool> DeleteAsync(string Id){
-    // bool result = false;
-    // int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    // if (index != -1){
-    //     ShopUsers.RemoveAt(index);
-    //     result=true;
-    // }
-
-    // return result;
 
     DeleteResult r = await _UserCollection.DeleteOneAsync(user => user.Id == Id);
     return r.DeletedCount == 1;
@@ -121,18 +88,7 @@ public async Task<bool> DeleteAsync(string Id){
 
 /// Add Item to shopping bag method
 public async Task<bool> AddItemAsync (string Id , string itemId, ShopUser currentUser, ShopItem currentItem){
-//     bool result = false;
-//     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
-//     int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x=> (x.Id).ToString() == itemId);
-//     if (userindex != -1 && itemindex != -1){
-// //        Add item to the list
-//         ShopUsers[userindex].ShoppingBag.Add(Merchant_API.services.ShopItemService.ShopItems[itemindex]);
-//         result=true;
-//     }
-
-//     return result;
     var updatedUser = currentUser;
-
     updatedUser.ShoppingBag.Add(currentItem);
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, updatedUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
@@ -142,23 +98,6 @@ public async Task<bool> AddItemAsync (string Id , string itemId, ShopUser curren
 
 /// Remove Item from shopping bag by id method
 public async Task<bool> RemoveItemAsync(string Id , string itemId, ShopUser currentUser){
-        // bool result = false;
-        // int userindex = ShopUsers.FindIndex(x => x.Id == Id);
-        // int itemindex = Merchant_API.services.ShopItemService.ShopItems.FindIndex(x => (x.Id).ToString() == itemId);
-        // if (userindex != -1 && itemindex != -1)
-        // {
-
-        //     int itemindex2 = ShopUsers[userindex].ShoppingBag.FindIndex(x => (x.Id).ToString() == itemId);
-
-        //     if (itemindex2 != -1)
-        //     {
-        //         ShopUsers[userindex].ShoppingBag.RemoveAt(itemindex2);
-        //         result = true;
-        //     }
-        // }
-
-
-        // return result;
     int itemindex = currentUser.ShoppingBag.FindIndex(x=> x.Id == itemId);
     if(itemindex!= -1){
         currentUser.ShoppingBag.RemoveAt(itemindex);
@@ -173,15 +112,6 @@ public async Task<bool> RemoveItemAsync(string Id , string itemId, ShopUser curr
 
 /// Remove All Item from shopping bag method
 public async Task<bool> RemoveAllItemAsync (string Id, ShopUser currentUser){
-//     bool result = false;
-//     int index = ShopUsers.FindIndex(x=> x.Id == Id);
-//     if (index != -1){
-// //        Remove all item from shopping bag;
-//         ShopUsers[index].ShoppingBag.Clear();
-//         result=true;
-//         }
-
-//     return result;
     currentUser.ShoppingBag.Clear();
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, currentUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
@@ -190,23 +120,6 @@ public async Task<bool> RemoveAllItemAsync (string Id, ShopUser currentUser){
 
 /// Login to the site method
 public async Task<bool> LoginAsync (ShopUser currentUser){
-//     int result = 0;
-//     int index = ShopUsers.FindIndex(x=> x.Id == Id);
-// // check if user is already logged in
-//     if( ShopUsers[index].IsLoggedIn == true)
-//     result = -1;
-
-//     if (index != -1){
-//         if( ShopUsers[index].IsLoggedIn == false && ShopUsers[index].Email.ToLower() == Email.ToLower() && ShopUsers[index].Password == Password ){
-//         ShopUsers[index].IsLoggedIn = true;
-//         result=1;}
-//         }
-//     // force logout multiple login
-//     if (result == -1)
-//     ShopUsers[index].IsLoggedIn = false;
-
-//     return result;
-
     currentUser.IsLoggedIn = true;
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == currentUser.Id, currentUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1; 
@@ -215,12 +128,6 @@ public async Task<bool> LoginAsync (ShopUser currentUser){
 
 /// Logout from the site method
 public async Task<bool> LogoutAsync (ShopUser currentUser){
-    // bool result = false;
-    // int index = ShopUsers.FindIndex(x=> x.Id == Id);
-    // if (index != -1 && ShopUsers[index].IsLoggedIn == true){
-    //     ShopUsers[index].IsLoggedIn = false;
-    //     result=true;} 
-    // return result;
     currentUser.IsLoggedIn = false;
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == currentUser.Id, currentUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
@@ -230,25 +137,12 @@ public async Task<bool> LogoutAsync (ShopUser currentUser){
 
 /// Printing invoice method
 public async Task<List<ShopItem>> InvoiceAsync (string Id,ShopUser currentUser){
-//     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
-//     List<ShopItem> Invoiceitems = new List<ShopItem>();
-//     if (userindex != -1){
-// //        Add item to invoice;
-//     foreach (var item in ShopUsers[userindex].ShoppingBag)
-//     {
-//         Invoiceitems.Add(item);
-//     }
-//     }
-//     return Invoiceitems;
-    //int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     List<ShopItem> Invoiceitems = new List<ShopItem>();
-    // if (userindex != -1){
 //        Add item to invoice;
     foreach (var item in currentUser.ShoppingBag)
     {
         Invoiceitems.Add(item);
     }
-    //}
     return Invoiceitems;
 
 }
@@ -257,9 +151,7 @@ public async Task<List<ShopItem>> InvoiceAsync (string Id,ShopUser currentUser){
 /// CheckOut method
 public async Task<int> CheckOutAsync (string Id, ShopUser currentUser){
     int  sum = 0;
-    //int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
     List<ShopItem> checkoutitems = new List<ShopItem>();
-    // if (userindex != -1){
 //        Add items to checkout list;
     foreach (var item in currentUser.ShoppingBag)
     {
@@ -270,31 +162,11 @@ public async Task<int> CheckOutAsync (string Id, ShopUser currentUser){
     //Add item to order list and clear the bag
     currentUser.OrderHistory.Add(checkoutitems);
     currentUser.ShoppingBag.Clear();
-    //}
     if(sum!=0){
         ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, currentUser);
     }
 
     return sum;
-
-
-//     int  sum = 0;
-//     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
-//     List<ShopItem> checkoutitems = new List<ShopItem>();
-//     if (userindex != -1){
-// //        Add items to checkout list;
-//     foreach (var item in ShopUsers[userindex].ShoppingBag)
-//     {
-//         sum += Int32.Parse(item.Price.TrimStart( new Char[] { ' ', '$' } ));
-//         checkoutitems.Add(item);
-//     }
-//         var time = DateTime.Now.ToString();
-//         //Add item to order list and clear the bag
-//         ShopUsers[userindex].OrderHistory.Add(checkoutitems);
-//         ShopUsers[userindex].ShoppingBag.Clear();
-//     }
-
-//     return sum;
 
 }
 
@@ -304,17 +176,6 @@ public async Task<bool> RemoveAllOrderHistoryAsync (string Id, ShopUser currentU
     currentUser.OrderHistory.Clear();
     ReplaceOneResult r = await _UserCollection.ReplaceOneAsync(item => item.Id == Id, currentUser);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
-
-//     bool result = false;
-
-//     int userindex = ShopUsers.FindIndex(x=> x.Id == Id);
-//     if (userindex != -1){
-// //        Clear all
-//         ShopUsers[userindex].OrderHistory.Clear();
-//         result=true;
-//     }
-
-//     return result;
 
 }
 

@@ -89,7 +89,6 @@ public async Task<ActionResult> ChangeCategory (string oldcat, string newcat){
     }else{
         return Ok("Status: Ok");
     }
-
     
 }
 
@@ -102,7 +101,6 @@ public async Task<ActionResult> DeleteCategory (string cat){
     }else{
         return Ok("Status: Ok");
     }
-
     
 }
 
@@ -115,10 +113,8 @@ public async Task<ActionResult> DeleteUncategorized (){
     }else{
         return Ok("Status: Ok");
     }
-
     
 }
-
 
 
 }

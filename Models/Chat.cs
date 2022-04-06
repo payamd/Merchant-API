@@ -9,7 +9,6 @@ public class Chat{
      public string Name { get; set; }
     public string Content { get; set; }
     public string Date { get; set; }
-    //    public List<ChatText> ChatContent { get; set; }
     public Chat(){
         
     }
@@ -19,9 +18,7 @@ public class Chat{
         this.Id = Id;
         this.Name = Name;
         this.Content = Content;
-        this.Date = DateTime.Now.ToString();
-
-       // this.ChatContent = new List<ChatText>()  
+        this.Date = DateTime.Now.ToString(); 
     }
 
     public Chat (string Id,string Name,string Content, string Date)
@@ -31,8 +28,7 @@ public class Chat{
         this.Name = Name;
         this.Content = Content;
         this.Date = Date;
-
-       // this.ChatContent = new List<ChatText>()  
+ 
     }
 
 }

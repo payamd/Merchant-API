@@ -4,7 +4,6 @@ using Merchant_API.services;
 using Merchant_API.models;
 
 //Shop user api controller
-
 [ApiController]
 /*[Route("api/[controller]")]*/
 //[Route("/")]
@@ -74,7 +73,6 @@ public async Task<ActionResult> Createbykeys(string Name,string ProfilePicture, 
 [HttpPut("{id}")]
 public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
-   // var ShopUser=ShopUser1.First();
       var ShopUser=ShopUser1;
 
     if (ShopUser is null) {
@@ -94,7 +92,6 @@ public async Task<ActionResult> Update(string Id, ShopUser updatedShopUser){
 [HttpDelete("{id}")]
 public async Task<ActionResult> Delete (string Id){
     var ShopUser1 = await _ShopUserService.GetAsync(Id);
-    //var ShopUser=ShopUser1.First();
     var ShopUser=ShopUser1;
 
     if (ShopUser is null) {
@@ -108,16 +105,6 @@ public async Task<ActionResult> Delete (string Id){
 //Add item to shopping bag
 [HttpPost("Add{id}")]
 public async Task<ActionResult> AddItem(string Id, string itemId){
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // bool updated = await _ShopUserService.AddItemAsync(Id,itemId);
-    // if (!updated){
-    //     // This is a good place to add some new code
-    //     return NotFound();
-    // }
-    // return Ok("Status: Ok");
     var ShopUser = await _ShopUserService.GetAsync(Id);          
     var ShopItem = await _ShopItemService.GetAsync(itemId);
     if (ShopUser is null || ShopItem is null) {
@@ -135,16 +122,7 @@ public async Task<ActionResult> AddItem(string Id, string itemId){
 //Remove item from shopping bag
 [HttpPost("Remove{id}")]
 public async Task<ActionResult> RemoveItem(string Id, string itemId){
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // bool updated = await _ShopUserService.RemoveItemAsync(Id,itemId);
-    // if (!updated){
-    //     // if not found
-    //     return NotFound();
-    // }
-    // return Ok("Status: Ok");
+
     var ShopUser = await _ShopUserService.GetAsync(Id);
     var ShopItem = await _ShopItemService.GetAsync(itemId);
     if (ShopUser is null || ShopItem is null) {
@@ -162,16 +140,7 @@ public async Task<ActionResult> RemoveItem(string Id, string itemId){
 //Remove All items from a user shopping bag
 [HttpPost("RAll{id}")]
 public async Task<ActionResult> RemoveAllItem(string Id){
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // bool updated = await _ShopUserService.RemoveAllItemAsync(Id);
-    // if (!updated){
-    //     // If not found
-    //     return NotFound();
-    // }
-    // return Ok("Status: Ok");
+    // Select user by id
      var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();
@@ -198,17 +167,6 @@ public async Task<ActionResult> Invoice(string Id){
         return NotFound("there is no Item in your bag!");
     }
     return Ok(updated);
-
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // var updated = await _ShopUserService.InvoiceAsync(Id);
-    // if (updated.Count == 0){
-    //     // if there is no item in the bag
-    //     return NotFound("there is no Item in your bag!");
-    // }
-    // return Ok(updated);
 }
 
 
@@ -225,16 +183,6 @@ public async Task<ActionResult> CheckOut(string Id){
         return NotFound("there is no Item in your bag!");
     }
     return Ok("Status: Ok - total price  = " + updated);
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // var updated = await _ShopUserService.CheckOutAsync(Id);
-    // if (updated == 0){
-    //     // if there is no item in the bag
-    //     return NotFound("there is no Item in your bag!");
-    // }
-    // return Ok("Status: Ok - total price  = " + updated);
 }
 
 
@@ -251,17 +199,6 @@ public async Task<ActionResult> RemoveAllOrderHistory(string Id){
         return NotFound();
     }
     return Ok("Status: Ok");
-
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // bool updated = await _ShopUserService.RemoveAllOrderHistoryAsync(Id);
-    // if (!updated){
-    //     // If there is nothing to remove
-    //     return NotFound();
-    // }
-    // return Ok("Status: Ok");
 }
 
 
@@ -289,73 +226,11 @@ public async Task<ActionResult> Login(string Email, string Password){
         return NotFound("Login Error!");
     }
     return Ok(ShopUser.Id);
-
-    //await _ShopUserService.GetByEmailAsync(Email);
-    //string result = await _ShopUserService.LoginAsync(string Email, string Password);
-
-
-    // if(result == "0"){
-    //     return NotFound("There is no user in the database!");
-    // }
-    // if(result == "1"){
-    //     return NotFound("Please check your password and try again");
-    // }
-    // if(result == "2"){
-    //     bool logout = await _ShopUserService.LogoutAsync(string Email);
-    //     if (!logout){
-    //         return NotFound();
-    //     }
-    //     return NotFound("For security reasons you logged out, please login again!");
-    // }
-
-    // if(result == "3"){
-    //     return NotFound("Login Error!");
-    // }
-    // return Ok(result);
-
-    // //var ShopUsers = await _ShopUserService.getAllUsersAsync();
-
-    // string Id="-1"; 
-
-    // var ShopUsers = await _ShopUserService.GetAsync();
-    // if (ShopUsers is null) {
-    //     return NotFound("there is no user in the database!");
-    // } else{
-    //     foreach (var user in ShopUsers)
-    //     {
-    //         if (user.Email.ToLower() == Email.ToLower()){
-    //             Id = user.Id;
-    //         }
-            
-    //     }
-    // }
-    // if (Id!="-1"){
-    //             int updated = await _ShopUserService.LoginAsync(Id, Email, Password);
-    //              if (updated == 0){
-    //                  // If we don't have a user in the database or the password is wrong
-    //                  return NotFound("We dont have that user in the database or your password is wrong");
-    //                           }else if (updated==-1){
-    //                               return NotFound("For security reasons you logged out, please login again!");
-    //                           }
-    //                           return Ok(Id);
-    //                  ;}
-
-    //  else{return NotFound("We dont have that user!");}
-
 }
 
 //Log out a user from the site by id
 [HttpPost("logout{id}")]
 public async Task<ActionResult> Loginout(string Id){
-    // var ShopUser = await _ShopUserService.GetAsync(Id);
-    // if (ShopUser is null) {
-    //     return NotFound();
-    // }
-    // bool updated = await _ShopUserService.LogoutAsync(Id);
-    // if (!updated){
-    //     return NotFound();
-    // }
-    // return Ok("Status: Ok");
     var ShopUser = await _ShopUserService.GetAsync(Id);
     if (ShopUser is null) {
         return NotFound();

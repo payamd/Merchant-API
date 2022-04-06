@@ -18,7 +18,7 @@ public class ShopItemService{
     }
 
 
-///Default Values
+///Old Default Values
     public static List<ShopItem> ShopItems= new List<ShopItem> () {
         new ShopItem("1", "LG 4K UltraHD HDR LED Smart TV - UP7100", "Put your entertainment on full display with LG's UP7100 UHD TV that is engineered to enhance color, contrast, clarity and detail.","Put your entertainment on full display with LG's UP7100 UHD TV that is engineered to enhance color, contrast, clarity and detail. This smart TV also provides compatibility with Google Home, Alexa and Apple HomeKit for convenient control of your entertainment experience.","assets/lg_4k_ultra_hd.jpg","999","Black","TV", "10"),
         new ShopItem("2", "RCA 24-INCH ROKU SMART TV", "xperience everything that TV has to offer with this 24-inch LED smart TV from RCA.","Experience everything that TV has to offer with this 24-inch LED smart TV from RCA. The built-in Roku app lets you control the TV directly through your smartphone for great control and ease of use. You can also cast photos, videos, music and more directly from your compatible mobile device right onto the television.","assets/rca_24_roku.jpg","950","Black","TV", "10"),
@@ -47,17 +47,13 @@ public class ShopItemService{
 public async Task CreateAsynce (ShopItem newShopItem){
     newShopItem.Id = null; // will be set by Mongo
     await _ItemCollection.InsertOneAsync(newShopItem);
-   // ShopItems.Add(newShopItem);
 }
 
 /// Create item by value keys Method
 public async Task CreatebykeysAsynce (string Name, string ShortDescription, string Description, string Picture, string Price, string Option, string Category, string Quantity){
-    //int Id = ShopItems.Count();
-    //Id = Id+1;
     string Id = null;
     ShopItem newShopItem = new ShopItem (Id, Name, ShortDescription, Description, Picture, Price, Option, Category, Quantity);
     await _ItemCollection.InsertOneAsync(newShopItem);
-    //ShopItems.Add(newShopItem);
 
     }
 
@@ -65,26 +61,16 @@ public async Task CreatebykeysAsynce (string Name, string ShortDescription, stri
 /// Get all shop items method
 public async Task<List<ShopItem>> GetAsync(){
      return await _ItemCollection.Find(_ => true).ToListAsync();
-    //return ShopItems;
 }
 
 /// Get one shop item by id method
 public async Task<ShopItem> GetAsync( string Id){
     return await _ItemCollection.Find<ShopItem>(chat => chat.Id == Id).FirstOrDefaultAsync();
-    //return ShopItems.Find(x => x.Id == Id);
 }
 
 /// Update shop item method
 public async Task<bool> UpdateAsync (string Id, ShopItem UpdatedShopItem){
-    // bool result = false;
-    // int index = ShopItems.FindIndex(x=> x.Id == Id);
-    // if (index != -1){
-    //     UpdatedShopItem.Id = Id;
-    //     ShopItems[index]= UpdatedShopItem;
-    //     result=true;
-    // }
 
-    // return result;
     ReplaceOneResult r = await _ItemCollection.ReplaceOneAsync(item => item.Id == Id, UpdatedShopItem);
     return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
 
@@ -93,14 +79,6 @@ public async Task<bool> UpdateAsync (string Id, ShopItem UpdatedShopItem){
 
 /// Detele shop item by id method
 public async Task<bool> DeleteAsync(string Id){
-    // bool result = false;
-    // int index = ShopItems.FindIndex(x=> x.Id == Id);
-    // if (index != -1){
-    //     ShopItems.RemoveAt(index);
-    //     result=true;
-    // }
-
-    // return result;
     DeleteResult r = await _ItemCollection.DeleteOneAsync(item => item.Id == Id);
     return r.DeletedCount == 1;
 
@@ -108,75 +86,29 @@ public async Task<bool> DeleteAsync(string Id){
 
 // Change category from old name to new name by value keys
 public async Task<bool> ChangeCategoryAsync (string oldcat, string newcat){
-    
-   // UpdateResult r = await _ItemCollection.UpdateManyAsync<ShopItem>(item => item.Category.ToLower() == oldcat.ToLower(),);
         FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, oldcat);
         UpdateDefinition<ShopItem> update = Builders<ShopItem>.Update.Set(p => p.Category, newcat);
         UpdateResult r = await _ItemCollection.UpdateManyAsync(filter, update);
         return r.IsModifiedCountAvailable && r.ModifiedCount >= 1;
-
-    // bool result = false;
-    
-    // foreach(var item in ShopItems){
-    //     if(item.Category.ToLower() == oldcat.ToLower()){
-    //     item.Category=newcat;
-    //     result=true;}
-    // }
-
-    // return result;
 
 }
 
 // Delete category by the name of the chosen category
 
 public async Task<bool> DeleteCategoryAsync (string cat){
-    //UpdateResult r = await _ItemCollection.UpdateManyAsync<ShopItem>(item => item.Category.ToLower() == cat.ToLower(), "Uncategorized");
-   // return r.IsModifiedCountAvailable && r.ModifiedCount == 1;
         FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, cat);
         UpdateDefinition<ShopItem> update = Builders<ShopItem>.Update.Set(p => p.Category, "Uncategorized");
         UpdateResult r = await _ItemCollection.UpdateManyAsync(filter, update);
-        return r.IsModifiedCountAvailable && r.ModifiedCount >= 1;
-        
-    // bool result = false;
-    // foreach(var item in ShopItems){
-    //     if(item.Category.ToLower() == cat.ToLower()){
-    //     item.Category="Uncategorized";
-    //     result=true;
-    //     }
-    // }
-
-    // return result;
+        return r.IsModifiedCountAvailable && r.ModifiedCount >= 1;   
 
 }
 
 // Delete all uncategorized items from the shop
-
 public async Task<bool> DeleteUncategorizedAsync (){
         FilterDefinition<ShopItem> filter = Builders<ShopItem>.Filter.Eq(p => p.Category, "Uncategorized");
         DeleteResult r = await _ItemCollection.DeleteManyAsync(filter);
         return r.IsAcknowledged;
-        
-    // bool result = false;
-    // bool flag=false;
-    // List<ShopItem> list1 = new List<ShopItem>();
-    // string s1= "Uncategorized";
-    // foreach(var item in ShopItems){
-    //     if(item.Category.ToLower() == s1.ToLower()){
-    //     list1.Add(item);
-    //     flag=true;
-    //     }
-    // }
-    // if(flag==true){
-    //     ShopItems.RemoveAll(x => list1.Contains(x));
-    //     result = true;}
-     
-    
-
-    // return result;
 
 }
-
-
-
 
 }
